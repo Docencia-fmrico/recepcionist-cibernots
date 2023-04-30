@@ -66,19 +66,20 @@ add_library(${PROJECT_NAME} SHARED
   src/perception_asr/DarknetObjDetectionNode.cpp
   src/perception_asr/ObjectDetectionTo3DfromDepthNode.cpp
   src/tf2_detector/ObjectDetectorImprovedNode.cpp
+  src/pid/PIDController.cpp
 )
 ament_target_dependencies(${PROJECT_NAME} ${dependencies})
 
-# add_library(bt_SearchSeat_node SHARED src/BTS/SearchSeat.cpp)
-# add_library(bt_detectobject_node SHARED src/bt_nodes/Detectobject.cpp)
-# add_library(bt_reachedobject_node SHARED src/bt_nodes/Reachedobject.cpp)
-# add_library(bt_searchobject_node SHARED src/bt_nodes/Searchobject.cpp)
+add_library(bt_SearchChair_node SHARED src/bt_nodes/SearchChair.cpp)
+add_library(bt_FindChair_node SHARED src/bt_nodes/FindChair.cpp)
+add_library(bt_GoChair_node SHARED src/bt_nodes/GoChair.cpp src/pid/PIDController.cpp)
+add_library(bt_ReachedChair_node SHARED src/bt_nodes/ReachedChair.cpp)
 
 list(APPEND plugin_libs
-  # bt_SearchSeat_node
-  # bt_detectobject_node
-  # bt_reachedobject_node
-  # bt_searchobject_node
+  bt_SearchChair_node
+  bt_FindChair_node
+  bt_GoChair_node
+  bt_ReachedChair_node
 )
 
 foreach(bt_plugin ${plugin_libs})
@@ -90,10 +91,6 @@ add_executable(darknet_objdetection_tf src/darknet_detection_main.cpp)
 ament_target_dependencies(darknet_objdetection_tf ${dependencies})
 target_link_libraries(darknet_objdetection_tf ${PROJECT_NAME})
 
-# add_executable(recepcionist src/bt_recepcionist.cpp)
-# ament_target_dependencies(recepcionist ${dependencies})
-# target_link_libraries(recepcionist ${ZMQ_LIBRARIES})
-
 add_executable(objdetection_2d_to_3d_depth_tf src/detection_2d_to_3d_depth_main.cpp)
 ament_target_dependencies(objdetection_2d_to_3d_depth_tf ${dependencies})
 target_link_libraries(objdetection_2d_to_3d_depth_tf ${PROJECT_NAME})
@@ -102,10 +99,14 @@ add_executable(imageobject_tf src/detector_improved_main.cpp)
 ament_target_dependencies(imageobject_tf ${dependencies})
 target_link_libraries(imageobject_tf ${PROJECT_NAME})
 
+add_executable(recepcionist src/bt_recepcionist.cpp)
+ament_target_dependencies(recepcionist ${dependencies})
+target_link_libraries(recepcionist ${ZMQ_LIBRARIES})
+
 install(TARGETS
   ${PROJECT_NAME}
   ${plugin_libs}
-  # recepcionist
+  recepcionist
   darknet_objdetection_tf
   objdetection_2d_to_3d_depth_tf
   imageobject_tf

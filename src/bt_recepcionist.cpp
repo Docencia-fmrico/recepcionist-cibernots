@@ -34,13 +34,13 @@ int main(int argc, char * argv[])
   BT::BehaviorTreeFactory factory;
   BT::SharedLibrary loader;
 
-  factory.registerFromPlugin(loader.getOSName("bt_SearchSeat_node"));
-  // factory.registerFromPlugin(loader.getOSName("bt_detectPerson_node"));
-  // factory.registerFromPlugin(loader.getOSName("bt_reachedPerson_node"));
-  // factory.registerFromPlugin(loader.getOSName("bt_searchPerson_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_SearchChair_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_FindChair_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_GoChair_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_ReachedChair_node"));
 
   std::string pkgpath = ament_index_cpp::get_package_share_directory("recepcionist_cibernots");
-  std::string xml_file = pkgpath + "/behavior_tree_xml/bt_recepcionist.xml";
+  std::string xml_file = pkgpath + "/behavior_tree_xml/bt_visionchair.xml";
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set("node", node);
@@ -52,7 +52,7 @@ int main(int argc, char * argv[])
 
   bool finish = false;
   while (!finish && rclcpp::ok()) {
-    finish = tree.rootNode()->executeTick() != BT::NodeStatus::RUNNING;
+    finish = tree.rootNode()->executeTick() != BT::NodeStatus::SUCCESS;
 
     rclcpp::spin_some(node);
     rate.sleep();
