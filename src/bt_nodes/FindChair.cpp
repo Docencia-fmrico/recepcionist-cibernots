@@ -40,6 +40,7 @@ FindChair::FindChair(
   tf_listener_(tf_buffer_)
 {
   config().blackboard->get("node", node_);
+  vel_pub_ = node_->create_publisher<geometry_msgs::msg::Twist>("output_vel", 100);
 }
 
 BT::NodeStatus
@@ -49,23 +50,27 @@ FindChair::tick()
 
   geometry_msgs::msg::TransformStamped base2obj_msg;
   tf2::Stamped<tf2::Transform> base2obj;
-
+  RCLCPP_INFO(node_->get_logger(), "FINDCHAIR: BUSCANDO TRANSFORMADA detected_obj");
   // Search for the tf of the object
   try {
     base2obj_msg = tf_buffer_.lookupTransform(
-      "base_footprint", "detected_obj",
+      "base_link", "detected_obj",
       tf2::TimePointZero);
     tf2::fromMsg(base2obj_msg, base2obj);
-    RCLCPP_INFO(node_->get_logger(), "TRANSFORMADA ENCONTRADA:%s", base2obj_msg.child_frame_id.c_str());
+    RCLCPP_INFO(node_->get_logger(), "FINDCHAIR: TRANSFORMADA ENCONTRADA:%s", base2obj_msg.child_frame_id.c_str());
   } catch (tf2::TransformException & ex) {
-    RCLCPP_WARN(node_->get_logger(), "object transform not found: %s", ex.what());
+    RCLCPP_WARN(node_->get_logger(), "FINDCHAIR: object transform not found: %s", ex.what());
     return BT::NodeStatus::FAILURE;
   }
   if ((node_->now() - rclcpp::Time(base2obj_msg.header.stamp)) > TF_CHAIR_TIMEOUT){
-    RCLCPP_WARN(node_->get_logger(), "object transform not found");
+    RCLCPP_WARN(node_->get_logger(), "FINDCHAIR: SEGUNDO IF object transform not found");
     return BT::NodeStatus::FAILURE;
   }
+  RCLCPP_INFO(node_->get_logger(),"FINDCHAIR: DEVUELVO SUCCESS, TS: %f", (node_->now() - rclcpp::Time(base2obj_msg.header.stamp)).seconds());
+  geometry_msgs::msg::Twist out_vel;
+  out_vel.angular.z = 0.0f;
 
+  vel_pub_->publish(out_vel);
   return BT::NodeStatus::SUCCESS;
 }
 

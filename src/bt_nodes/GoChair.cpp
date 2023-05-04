@@ -58,28 +58,28 @@ GoChair::GoChair(
 BT::NodeStatus
 GoChair::tick()
 {
-  geometry_msgs::msg::TransformStamped odom2obj_msg;
-  tf2::Stamped<tf2::Transform> odom2obj;
+  geometry_msgs::msg::TransformStamped base2obj_msg;
+  tf2::Stamped<tf2::Transform> base2obj;
 
   // Search for the obj tf
   try {
-    odom2obj_msg = tf_buffer_.lookupTransform(
-      "base_footprint", "detected_obj",
+    base2obj_msg = tf_buffer_.lookupTransform(
+      "base_link", "detected_obj",
       tf2::TimePointZero);
-    tf2::fromMsg(odom2obj_msg, odom2obj);
+    tf2::fromMsg(base2obj_msg, base2obj);
   } catch (tf2::TransformException & ex) {
-    RCLCPP_WARN(node_->get_logger(), "obj transform not found: %s", ex.what());
+    RCLCPP_WARN(node_->get_logger(), "GOCHAIR: obj transform not found: %s", ex.what());
     return BT::NodeStatus::RUNNING;
   }
-  
+  RCLCPP_INFO(node_->get_logger(), "GOCHAIR: VOY A LA SILLA");
   // Calculate the distance to the obj using pitagoras theorem
-  double distance = sqrt(odom2obj.getOrigin().x()*odom2obj.getOrigin().x() + odom2obj.getOrigin().y()*odom2obj.getOrigin().y());
+  double distance = sqrt(base2obj.getOrigin().x()*base2obj.getOrigin().x() + base2obj.getOrigin().y()*base2obj.getOrigin().y());
   
   // Calculate the linear velocity using the PID controller
   double linear_vel = linear_pid_.get_output(distance);
   
   // Calculate the angular error using the arc tangent
-  auto err_ang = std::atan2(odom2obj.getOrigin().y(), fabs(odom2obj.getOrigin().x()));
+  auto err_ang = std::atan2(base2obj.getOrigin().y(), fabs(base2obj.getOrigin().x()));
 
   // Calculate the angular velocity using the PID controller
   double angular_vel = angular_pid_.get_output(err_ang);
@@ -91,9 +91,9 @@ GoChair::tick()
   vel_msgs.linear.x = linear_vel;
   vel_msgs.angular.z = angular_vel;
   
-  vel_pub_->publish(vel_msgs);
+  // vel_pub_->publish(vel_msgs);
 
-  return BT::NodeStatus::SUCCESS;
+  return BT::NodeStatus::RUNNING;
 }
 
 

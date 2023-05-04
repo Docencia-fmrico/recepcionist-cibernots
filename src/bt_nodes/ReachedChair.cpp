@@ -49,7 +49,6 @@ ReachedChair::ReachedChair(
 
   // Sound publisher
   sound_pub_ = node_->create_publisher<kobuki_ros_interfaces::msg::Sound>("output_sound", 10);
-
 }
 
 BT::NodeStatus
@@ -62,19 +61,24 @@ ReachedChair::tick()
   // Search for the tf
   try {
     odom2obj_msg = tf_buffer_.lookupTransform(
-      "base_footprint", "detected_obj",
+      "base_link", "detected_obj",
       tf2::TimePointZero);
     tf2::fromMsg(odom2obj_msg, odom2obj);
+    kobuki_ros_interfaces::msg::Sound msg;
+    msg.value = kobuki_ros_interfaces::msg::Sound::CLEANINGEND;
+    
+    sound_pub_->publish(msg);
+    return BT::NodeStatus::SUCCESS;
   } catch (tf2::TransformException & ex) {
-    RCLCPP_WARN(node_->get_logger(), "obj transform not found: %s", ex.what());
+    RCLCPP_WARN(node_->get_logger(), "REACHEDCHAIR: obj transform not found: %s", ex.what());
     return BT::NodeStatus::FAILURE;
   }
 
   // Calculate distance using pythagoras theorem
-  double distance = sqrt(odom2obj.getOrigin().x()*odom2obj.getOrigin().x() +odom2obj.getOrigin().y()*odom2obj.getOrigin().y());
-
-  // If the distance is less than 1.5, the obj is reached
-  if (std::abs(distance) <= 1.5) {
+  double distance = sqrt(odom2obj.getOrigin().x()*odom2obj.getOrigin().x() + odom2obj.getOrigin().y()*odom2obj.getOrigin().y());
+  RCLCPP_INFO(node_->get_logger(),"REACHEDCHAIR: DISTANCIA A LA PERSONA: %f ## Condicion: %d", distance, (std::abs(distance) <= 1.25));
+  // If the distance is less than 1.35, the obj is reached
+  if (std::abs(distance) <= 1.35) {
     // Send sound
     kobuki_ros_interfaces::msg::Sound msg;
     msg.value = kobuki_ros_interfaces::msg::Sound::CLEANINGEND;

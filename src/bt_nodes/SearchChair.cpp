@@ -43,10 +43,9 @@ SearchChair::SearchChair(
 BT::NodeStatus
 SearchChair::tick()
 {
-
   // Rotate to find some free chair
   geometry_msgs::msg::Twist out_vel;
-  out_vel.angular.z = 0.35f;
+  out_vel.angular.z = -0.35f;
 
   vel_pub_->publish(out_vel);
   return BT::NodeStatus::RUNNING;

@@ -50,9 +50,14 @@ int main(int argc, char * argv[])
 
   rclcpp::Rate rate(10);
 
+  int count = 0;
   bool finish = false;
   while (!finish && rclcpp::ok()) {
-    finish = tree.rootNode()->executeTick() != BT::NodeStatus::SUCCESS;
+    if (tree.rootNode()->executeTick() == BT::NodeStatus::SUCCESS) {
+      count++;
+    }
+
+    finish = count == 3;
 
     rclcpp::spin_some(node);
     rate.sleep();

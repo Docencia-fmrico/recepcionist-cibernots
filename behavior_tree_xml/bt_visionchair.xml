@@ -2,24 +2,18 @@
 <root main_tree_to_execute="BehaviorTree">
     <!-- ////////// -->
     <BehaviorTree ID="BehaviorTree">
-        <RetryUntilSuccessful num_attempts="1">
-            <Sequence>
-                <Fallback>
-                    <Condition ID="FindChair"/>
-                    <Action ID="SearchChair"/>
-                </Fallback>
-                <Sequence>
-                    <Action ID="GoChair"/>
-                    <Condition ID="ReachedChair"/>
-                </Sequence>
-            </Sequence>
-        </RetryUntilSuccessful>
+        <Repeat num_cycles="1">
+            <ReactiveFallback>
+                <Condition ID="FindChair"/>
+                <Action ID="SearchChair"/>
+            </ReactiveFallback>
+        </Repeat>
     </BehaviorTree>
     <!-- ////////// -->
     <TreeNodesModel>
         <Condition ID="FindChair"/>
         <Action ID="GoChair"/>
-        <Condition ID="ReachedChair"/>
+        <Action ID="ReachedChair"/>
         <Action ID="SearchChair"/>
     </TreeNodesModel>
     <!-- ////////// -->

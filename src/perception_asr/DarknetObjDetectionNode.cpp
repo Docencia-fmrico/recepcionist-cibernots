@@ -52,9 +52,9 @@ DarknetObjDetectionNode::detection_callback(
     other nodes of ROS can analyze them if they want. */
     for (const auto & bbx : msg->bounding_boxes) {
       /* A Detection2D object is created from which the center of the bbx and its size are calculated. */
-
+      
       /* We are only interested in the bbx of people */
-      if ((std::strcmp(bbx.class_id.c_str(), "chair") == 0) && (bbx.probability > 0.85)) {
+      if ((std::strcmp(bbx.class_id.c_str(), "chair") == 0) && (bbx.probability >= 0.4) && (bbx.xmin + ((bbx.xmax - bbx.xmin) / 2)) <= 300) {
 
         RCLCPP_INFO(get_logger(), "bbx:%s", bbx.class_id.c_str());
 
@@ -63,6 +63,7 @@ DarknetObjDetectionNode::detection_callback(
         detection_msg.header = msg->image_header;
 
         detection_msg.bbox.center.position.x = bbx.xmin + ((bbx.xmax - bbx.xmin) / 2);
+        RCLCPP_INFO(get_logger(), "POSICION DEL CENTRO  %f", detection_msg.bbox.center.position.x);
         detection_msg.bbox.center.position.y = bbx.ymin + ((bbx.ymax - bbx.ymin) / 2);
         detection_msg.bbox.size_x = bbx.xmax - bbx.xmin;
         detection_msg.bbox.size_y = bbx.ymax - bbx.ymin;
