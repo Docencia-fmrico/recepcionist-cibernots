@@ -27,6 +27,7 @@ find_package(behaviortree_cpp_v3 REQUIRED)
 find_package(kobuki_ros_interfaces REQUIRED)
 find_package(control_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(nav2_msgs REQUIRED)
 
 find_package(OpenCV REQUIRED)
 
@@ -60,6 +61,7 @@ set(dependencies
   control_msgs
   kobuki_ros_interfaces
   std_msgs
+  nav2_msgs
 )
 
 add_library(${PROJECT_NAME} SHARED
@@ -76,6 +78,7 @@ add_library(bt_indicateChair_node SHARED src/BTS/IndicateChair.cpp)
 add_library(bt_introduce_node SHARED src/BTS/Introduce.cpp)
 add_library(bt_searchChair_node SHARED src/BTS/SearchChair.cpp)
 add_library(bt_waitPerson_node SHARED src/BTS/WaitPerson.cpp)
+add_library(bt_sendChair_node SHARED src/BTS/SendChair.cpp)
 
 list(APPEND plugin_libs
   bt_ask_node
@@ -85,6 +88,7 @@ list(APPEND plugin_libs
   bt_introduce_node
   bt_searchChair_node
   bt_waitPerson_node
+  bt_sendChair_node
 )
 
 foreach(bt_plugin ${plugin_libs})
@@ -96,9 +100,9 @@ add_executable(darknet_objdetection_tf src/darknet_detection_main.cpp)
 ament_target_dependencies(darknet_objdetection_tf ${dependencies})
 target_link_libraries(darknet_objdetection_tf ${PROJECT_NAME})
 
-# add_executable(recepcionist src/bt_recepcionist.cpp)
-# ament_target_dependencies(recepcionist ${dependencies})
-# target_link_libraries(recepcionist ${ZMQ_LIBRARIES})
+add_executable(recepcionist src/bt_recepcionist.cpp)
+ament_target_dependencies(recepcionist ${dependencies})
+target_link_libraries(recepcionist ${ZMQ_LIBRARIES})
 
 add_executable(objdetection_2d_to_3d_depth_tf src/detection_2d_to_3d_depth_main.cpp)
 ament_target_dependencies(objdetection_2d_to_3d_depth_tf ${dependencies})

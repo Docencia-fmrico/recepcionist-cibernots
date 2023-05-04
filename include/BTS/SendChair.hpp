@@ -12,40 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <string>
-#include <iostream>
+#ifndef BTS__SENDCHAIR_HPP_
+#define BTS__SENDCHAIR_HPP_
 
-#include "BTS/SearchChair.hpp"
+#include <string>
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
+#include "behaviortree_cpp_v3/bt_factory.h"
 
-#include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 namespace recepcionist_cibernots
 {
-using std::placeholders::_1;
-using namespace std::chrono_literals;
-
-
-SearchChair::SearchChair(
-  const std::string & xml_tag_name,
-  const BT::NodeConfiguration & conf)
-: BT::ActionNodeBase(xml_tag_name, conf)
+class SendChair : public BT::ActionNodeBase
 {
-  config().blackboard->get("node", node_);
-}
+public:
+  explicit SendChair(
+    const std::string & xml_tag_name,
+    const BT::NodeConfiguration & conf);
 
-BT::NodeStatus
-SearchChair::tick()
-{
-  return BT::NodeStatus::SUCCESS;
-}
+  void halt() {}
+  BT::NodeStatus tick();
+
+  static BT::PortsList providedPorts()
+  {
+    return BT::PortsList({});
+  }
+
+private:
+  rclcpp::Node::SharedPtr node_;
+};
 
 }  // namespace recepcionist_cibernots
 
-#include "behaviortree_cpp_v3/bt_factory.h"
-BT_REGISTER_NODES(factory)
-{
-  factory.registerNodeType<recepcionist_cibernots::SearchChair>("SearchChair");
-}
+#endif  // BTS__SENDCHAIR_HPP_

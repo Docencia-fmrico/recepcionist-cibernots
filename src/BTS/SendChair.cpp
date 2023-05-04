@@ -14,21 +14,19 @@
 
 #include <string>
 #include <iostream>
+#include <memory>
 
-#include "BTS/SearchChair.hpp"
+#include "BTS/SendChair.hpp"
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 
-#include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 namespace recepcionist_cibernots
 {
-using std::placeholders::_1;
 using namespace std::chrono_literals;
 
-
-SearchChair::SearchChair(
+SendChair::SendChair(
   const std::string & xml_tag_name,
   const BT::NodeConfiguration & conf)
 : BT::ActionNodeBase(xml_tag_name, conf)
@@ -37,9 +35,13 @@ SearchChair::SearchChair(
 }
 
 BT::NodeStatus
-SearchChair::tick()
-{
-  return BT::NodeStatus::SUCCESS;
+SendChair::tick()
+{ 
+    /*
+        Código donde se escribirá la parte del diálogo
+    */
+    // para ir probando la navegación, este nodo, devuelve success
+    return BT::NodeStatus::SUCCESS;
 }
 
 }  // namespace recepcionist_cibernots
@@ -47,5 +49,5 @@ SearchChair::tick()
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<recepcionist_cibernots::SearchChair>("SearchChair");
+  factory.registerNodeType<recepcionist_cibernots::SendChair>("SendChair");
 }

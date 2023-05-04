@@ -21,10 +21,11 @@
 #include "behaviortree_cpp_v3/bt_factory.h"
 
 #include "rclcpp/rclcpp.hpp"
+#include <std_msgs/msg/string.hpp>
 
 namespace recepcionist_cibernots
 {
-using namespace std::chrono_literals;
+//using namespace std::std_msgs;
 class Ask : public BT::ActionNodeBase
 {
 public:
@@ -37,7 +38,7 @@ public:
 
   static BT::PortsList providedPorts()
   {
-    return BT::PortsList({});
+    return {BT::InputPort<std_msgs::msg::String>("Request")};
   }
 
 private:

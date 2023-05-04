@@ -1,4 +1,4 @@
-// Copyright 2021 Intelligent Robotics Lab
+// Copyright 2023 cibernots
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BTS_INTRODUCE_HPP_
-#define BTS_INTRODUCE_HPP_
+#ifndef BTS__INTRODUCE_HPP_
+#define BTS__INTRODUCE_HPP_
 
 #include <string>
 
@@ -48,4 +48,4 @@ private:
 
 }  // namespace recepcionist_cibernots
 
-#endif  // BTS_INTRODUCE_HPP_
+#endif  // BTS__INTRODUCE_HPP_

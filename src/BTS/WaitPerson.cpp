@@ -1,4 +1,4 @@
-// Copyright 2021 Intelligent Robotics Lab
+// Copyright 2023 cibernots
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,14 +15,14 @@
 #include <string>
 #include <iostream>
 
-#include "bt_nodes/WaitPerson.hpp"
+#include "BTS/WaitPerson.hpp"
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
 
-namespace seekandcapture_cibernots
+namespace recepcionist_cibernots
 {
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -37,7 +37,7 @@ WaitPerson::WaitPerson(
 }
 
 BT::NodeStatus
-SearchPerson::tick()
+WaitPerson::tick()
 {
   return BT::NodeStatus::SUCCESS;
 }

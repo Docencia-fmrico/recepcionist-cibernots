@@ -30,41 +30,42 @@ GoTo::GoTo(
   const std::string & action_name,
   const BT::NodeConfiguration & conf)
 : recepcionist_cibernots::BtActionNode<nav2_msgs::action::NavigateToPose>(xml_tag_name, action_name,
-    conf)
-{
+    conf),
+    current_(0)
+  {
+  geometry_msgs::msg::PoseStamped wp;
+  wp.header.frame_id = "map";
+  wp.pose.orientation.w = 1.0;
+
+  // wp1
+  wp.pose.position.x = 7.68;
+  wp.pose.position.y = -1.25;
+  wp_.push_back(wp);
+
+  // wp2
+  wp.pose.position.x = 2.53;
+  wp.pose.position.y = 5.62;
+  wp_.push_back(wp);
+
+  // wp3
+  wp.pose.position.x = 1.17;
+  wp.pose.position.y = 6.5;
+  wp_.push_back(wp);
+  }
+
+geometry_msgs::msg::PoseStamped 
+GoTo::getCheckpoint() {
+  if (static_cast<size_t>(current_) >= wp_.size()) {
+    throw std::runtime_error("No more waypoints available.");
+  }
+  return wp_[current_++];
 }
 
 void
 GoTo::on_tick()
 {
   geometry_msgs::msg::PoseStamped goal;
-  getInput("Point", goal);
-
-  switch goal
-  {
-    /* 
-        cambiar el tener aquí las coordenadas explicitamente
-        por extraerlas del yaml
-    */
-    case "Door":
-        goal.pose.position.x = -0.481;
-        goal.pose.position.y = 3.09;
-
-    case "Party":
-        wp.pose.position.x = -22.6;
-        goal.pose.position.y = 9.63;
-
-    case "Barman":
-        goal.pose.position.x = -31;
-        goal.pose.position.y = -8.87;
-
-    case "Person":
-        /*
-            Publicar en IndicateChair las coordenadas de la silla indicada
-            y suscribirnos aqui al topic donde se publique.
-            En desarrollo
-        */
-  }
+  goal = getCheckpoint();
 
   goal_.pose = goal;
 }
@@ -80,6 +81,7 @@ GoTo::on_success()
 }  // namespace recepcionist_cibernots
 
 #include "behaviortree_cpp_v3/bt_factory.h"
+BT_REGISTER_NODES(factory)
 {
   BT::NodeBuilder builder =
     [](const std::string & name, const BT::NodeConfiguration & config)

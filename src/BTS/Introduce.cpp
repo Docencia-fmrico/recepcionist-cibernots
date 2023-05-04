@@ -15,14 +15,13 @@
 #include <string>
 #include <iostream>
 
-#include "bt_nodes/Introduce.hpp"
+#include "BTS/Introduce.hpp"
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 
-#include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
 
-namespace seekandcapture_cibernots
+namespace recepcionist_cibernots
 {
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -37,7 +36,7 @@ Introduce::Introduce(
 }
 
 BT::NodeStatus
-SearchPerson::tick()
+Introduce::tick()
 {
   return BT::NodeStatus::SUCCESS;
 }

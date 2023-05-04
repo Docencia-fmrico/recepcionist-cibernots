@@ -26,7 +26,7 @@
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 
-#include "br2_bt_patrolling/ctrl_support/BTActionNode.hpp"
+#include "BTS/ctrl_support/BTActionNode.hpp"
 
 namespace recepcionist_cibernots
 {
@@ -40,14 +40,19 @@ public:
     const BT::NodeConfiguration & conf);
 
   void on_tick() override;
+  geometry_msgs::msg::PoseStamped getCheckpoint();
   BT::NodeStatus on_success() override;
 
   static BT::PortsList providedPorts()
   {
     return {
-      BT::InputPort<geometry_msgs::msg::PoseStamped>("goal")
+      BT::InputPort<geometry_msgs::msg::PoseStamped>("Point")
     };
   }
+
+private:
+  std::vector<geometry_msgs::msg::PoseStamped> wp_;
+  int current_;
 };
 
 }  // namespace recepcionist_cibernots
