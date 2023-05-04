@@ -34,10 +34,13 @@ int main(int argc, char * argv[])
   BT::BehaviorTreeFactory factory;
   BT::SharedLibrary loader;
 
-  factory.registerFromPlugin(loader.getOSName("bt_SearchSeat_node"));
-  // factory.registerFromPlugin(loader.getOSName("bt_detectPerson_node"));
-  // factory.registerFromPlugin(loader.getOSName("bt_reachedPerson_node"));
-  // factory.registerFromPlugin(loader.getOSName("bt_searchPerson_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_ask_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_goTo_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_reachedPerson_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_indicateChair_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_introduce_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_searchChair_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_waitPerson_node"));
 
   std::string pkgpath = ament_index_cpp::get_package_share_directory("recepcionist_cibernots");
   std::string xml_file = pkgpath + "/behavior_tree_xml/bt_recepcionist.xml";

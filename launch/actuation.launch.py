@@ -36,17 +36,17 @@ def generate_launch_description():
                             'image2tf_obj.launch.py'))
                           )
     
-    # recepcionist_cmd = Node(package='recepcionist_cibernots',
-    #                               executable='recepcionist',
-    #                               output='screen',
-    #                               parameters=[{
-    #                                 'use_sim_time': False
-    #                               }],
-    #                               remappings=[
-    #                                 ('output_vel', '/cmd_vel'),
-    #                                 ('output_sound', '/commands/sound')
-    #                               ]
-    #                               )
+    recepcionist_cmd = Node(package='recepcionist_cibernots',
+                                  executable='recepcionist',
+                                  output='screen',
+                                  parameters=[{
+                                    'use_sim_time': False
+                                  }],
+                                  remappings=[
+                                    ('output_vel', '/cmd_vel'),
+                                    ('output_sound', '/commands/sound')
+                                  ]
+                                  )
 
     ld = LaunchDescription()
     # ld.add_action(recepcionist_cmd)
