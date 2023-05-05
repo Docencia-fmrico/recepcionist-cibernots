@@ -4,21 +4,21 @@
     <BehaviorTree ID="BehaviorTree">
         <Repeat num_cycles="2">
             <Sequence>
-                <Action ID="GoTo" Point="Door"/>
+                <Action ID="GoTo" Point="{Door}"/>
                 <Action ID="WaitPerson"/>
-                <Action ID="Ask" Request="name"/>
-                <Action ID="GoTo" Point="Party"/>
+                <Action ID="Ask" Request="{name}"/>
+                <Action ID="GoTo" Point="{Party}"/>
                 <Action ID="Introduce"/>
                 <ReactiveFallback>
                     <Condition ID="IfChair"/>
                     <Action ID="SearchChair"/>
                 </ReactiveFallback>
                 <Action ID="SendChair"/>
-                <Action ID="Ask" Request="drink"/>
+                <Action ID="Ask" Request="{drink}"/>
                 <Action ID="IndicateChair"/>
-                <Action ID="GoTo" Point="Barman"/>
-                <Action ID="Ask" Request="drink"/>
-                <Action ID="GoTo" Point="Person"/>
+                <Action ID="GoTo" Point="{Barman}"/>
+                <Action ID="Ask" Request="{drink}"/>
+                <Action ID="GoTo" Point="{Party}"/>
             </Sequence>
         </Repeat>
     </BehaviorTree>

@@ -30,42 +30,18 @@ GoTo::GoTo(
   const std::string & action_name,
   const BT::NodeConfiguration & conf)
 : recepcionist_cibernots::BtActionNode<nav2_msgs::action::NavigateToPose>(xml_tag_name, action_name,
-    conf),
-    current_(0)
-  {
-  geometry_msgs::msg::PoseStamped wp;
-  wp.header.frame_id = "map";
-  wp.pose.orientation.w = 1.0;
-
-  // wp1
-  wp.pose.position.x = 7.68;
-  wp.pose.position.y = -1.25;
-  wp_.push_back(wp);
-
-  // wp2
-  wp.pose.position.x = 2.53;
-  wp.pose.position.y = 5.62;
-  wp_.push_back(wp);
-
-  // wp3
-  wp.pose.position.x = 1.17;
-  wp.pose.position.y = 6.5;
-  wp_.push_back(wp);
-  }
-
-geometry_msgs::msg::PoseStamped 
-GoTo::getCheckpoint() {
-  if (static_cast<size_t>(current_) >= wp_.size()) {
-    throw std::runtime_error("No more waypoints available.");
-  }
-  return wp_[current_++];
+    conf)
+{
 }
 
 void
 GoTo::on_tick()
 {
   geometry_msgs::msg::PoseStamped goal;
-  goal = getCheckpoint();
+  getInput("Point", goal);
+
+  RCLCPP_INFO(node_->get_logger(), "Frame ID: %s, Orientation W: %f, Position X: %f, Position Y: %f", 
+    goal.header.frame_id.c_str(), goal.pose.orientation.w, goal.pose.position.x, goal.pose.position.y);
 
   goal_.pose = goal;
 }

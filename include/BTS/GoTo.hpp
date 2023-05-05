@@ -40,7 +40,6 @@ public:
     const BT::NodeConfiguration & conf);
 
   void on_tick() override;
-  geometry_msgs::msg::PoseStamped getCheckpoint();
   BT::NodeStatus on_success() override;
 
   static BT::PortsList providedPorts()
@@ -49,10 +48,6 @@ public:
       BT::InputPort<geometry_msgs::msg::PoseStamped>("Point")
     };
   }
-
-private:
-  std::vector<geometry_msgs::msg::PoseStamped> wp_;
-  int current_;
 };
 
 }  // namespace recepcionist_cibernots
