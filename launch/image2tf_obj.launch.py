@@ -22,6 +22,25 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 
 def generate_launch_description():
+  
+    # image2tf_person_cmd = IncludeLaunchDescription(
+    #                       PythonLaunchDescriptionSource(os.path.join(
+    #                         get_package_share_directory('seekandcapture_cibernots'),
+    #                         'launch',
+    #                         'image2tf_person.launch.py'))
+    #                       )
+    
+    recepcionist_cmd = Node(package='recepcionist_cibernots',
+                                  executable='recepcionist',
+                                  output='screen',
+                                  parameters=[{
+                                    'use_sim_time': False
+                                  }],
+                                  remappings=[
+                                    ('output_vel', '/cmd_vel'),
+                                    ('output_sound', '/commands/sound')
+                                  ]
+                                  )
 
     darknet_cmd = Node(package='recepcionist_cibernots',
                         executable='darknet_objdetection_tf',
@@ -61,5 +80,6 @@ def generate_launch_description():
     ld.add_action(darknet_cmd)
     ld.add_action(detection2d_3d_cmd)
     ld.add_action(detection3d_objtf_cmd)
+    ld.add_action(recepcionist_cmd)
 
     return ld

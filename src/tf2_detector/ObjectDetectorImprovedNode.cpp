@@ -37,7 +37,7 @@ ObjectDetectorImprovedNode::ObjectDetectorImprovedNode()
   tf_buffer_(),
   tf_listener_(tf_buffer_)
 {
-    detection_sub_ = create_subscription<vision_msgs::msg::Detection3DArray>(
+  detection_sub_ = create_subscription<vision_msgs::msg::Detection3DArray>(
     "input_detection_3d", rclcpp::SensorDataQoS(),
     std::bind(&ObjectDetectorImprovedNode::image3D_callback, this, _1));
 

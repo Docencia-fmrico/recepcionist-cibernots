@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <ReactiveFallback>
+                <Condition ID="FindChair"/>
+                <Action ID="SearchChair"/>
+            </ReactiveFallback>
+            <Action ID="SendChair"/>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Condition ID="FindChair"/>
+        <Action ID="GoChair"/>
+        <Action ID="ReachedChair"/>
+        <Action ID="SearchChair"/>
+        <Action ID="SendChair"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>
