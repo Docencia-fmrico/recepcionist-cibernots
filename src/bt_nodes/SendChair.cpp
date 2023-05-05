@@ -21,7 +21,7 @@
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 
-#include "geometry_msgs/msg/twist.hpp"
+#include "std_msgs/msg/string.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 #include "geometry_msgs/msg/transform_stamped.hpp"
@@ -61,7 +61,7 @@ SendChair::tick()
     // Search for the tf
     try {
         odom2chair_msg = tf_buffer_.lookupTransform(
-        "base_link", chairs[i],
+        "base_link", chairs_[i],
         tf2::TimePointZero);
         tf2::fromMsg(odom2chair_msg, odom2chair);
         angs_chairs_[i] = std::atan2(odom2chair.getOrigin().y(), fabs(odom2chair.getOrigin().x()));
@@ -81,9 +81,10 @@ SendChair::tick()
       indice = i;
     }
   }
+
   std_msgs::msg::String chair;
   
-  chair = chairs_[indice];
+  chair.data = chairs_[indice];
 
   ch_pub_->publish(chair);
 

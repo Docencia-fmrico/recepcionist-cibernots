@@ -2,12 +2,13 @@
 <root main_tree_to_execute="BehaviorTree">
     <!-- ////////// -->
     <BehaviorTree ID="BehaviorTree">
-        <Repeat num_cycles="1">
+        <Sequence>
             <ReactiveFallback>
                 <Condition ID="FindChair"/>
                 <Action ID="SearchChair"/>
             </ReactiveFallback>
-        </Repeat>
+            <Action ID="SendChair"/>
+        </Sequence>
     </BehaviorTree>
     <!-- ////////// -->
     <TreeNodesModel>
@@ -15,6 +16,7 @@
         <Action ID="GoChair"/>
         <Action ID="ReachedChair"/>
         <Action ID="SearchChair"/>
+        <Action ID="SendChair"/>
     </TreeNodesModel>
     <!-- ////////// -->
 </root>

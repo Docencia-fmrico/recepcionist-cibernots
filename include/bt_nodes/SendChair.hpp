@@ -23,9 +23,9 @@
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 
-#include "std_msgs/msg/String.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "kobuki_ros_interfaces/msg/sound.hpp"
+#include "std_msgs/msg/string.hpp"
 
 namespace recepcionist_cibernots
 {
@@ -59,4 +59,4 @@ private:
 
 }  // namespace recepcionist_cibernots
 
-#endif  // BT_NODES__REACHEDCHAIR_HPP_
+#endif  // BT_NODES__SENDCHAIR_HPP_

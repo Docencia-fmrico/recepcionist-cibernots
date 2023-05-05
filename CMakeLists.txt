@@ -40,6 +40,7 @@ endif()
 
 include_directories(include)
 include_directories(include ${ZMQ_INCLUDE_DIRS})
+include_directories(${std_msgs_INCLUDE_DIRS})
 
 set(dependencies
   rclcpp
@@ -74,12 +75,14 @@ add_library(bt_SearchChair_node SHARED src/bt_nodes/SearchChair.cpp)
 add_library(bt_FindChair_node SHARED src/bt_nodes/FindChair.cpp)
 add_library(bt_GoChair_node SHARED src/bt_nodes/GoChair.cpp src/pid/PIDController.cpp)
 add_library(bt_ReachedChair_node SHARED src/bt_nodes/ReachedChair.cpp)
+add_library(bt_SendChair_node SHARED src/bt_nodes/SendChair.cpp)
 
 list(APPEND plugin_libs
   bt_SearchChair_node
   bt_FindChair_node
   bt_GoChair_node
   bt_ReachedChair_node
+  bt_SendChair_node
 )
 
 foreach(bt_plugin ${plugin_libs})
