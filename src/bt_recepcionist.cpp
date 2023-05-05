@@ -19,6 +19,7 @@
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "behaviortree_cpp_v3/utils/shared_library.h"
 #include "behaviortree_cpp_v3/loggers/bt_zmq_publisher.h"
+#include "geometry_msgs/msg/pose_stamped.hpp"
 
 #include "ament_index_cpp/get_package_share_directory.hpp"
 
@@ -34,16 +35,45 @@ int main(int argc, char * argv[])
   BT::BehaviorTreeFactory factory;
   BT::SharedLibrary loader;
 
-  factory.registerFromPlugin(loader.getOSName("bt_SearchSeat_node"));
-  // factory.registerFromPlugin(loader.getOSName("bt_detectPerson_node"));
-  // factory.registerFromPlugin(loader.getOSName("bt_reachedPerson_node"));
-  // factory.registerFromPlugin(loader.getOSName("bt_searchPerson_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_goTo_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_waitPerson_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_ask_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_introduce_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_ifChair_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_searchChair_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_indicateChair_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_sendChair_node"));
 
   std::string pkgpath = ament_index_cpp::get_package_share_directory("recepcionist_cibernots");
+  // std::string xml_file = pkgpath + "/behavior_tree_xml/Goto.xml";
   std::string xml_file = pkgpath + "/behavior_tree_xml/bt_recepcionist.xml";
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set("node", node);
+
+  geometry_msgs::msg::PoseStamped Door;
+  Door.header.frame_id = "map";
+  Door.pose.orientation.w = 1.0;
+  Door.pose.position.x = 7.68;
+  Door.pose.position.y = -1.25;
+  blackboard->set("Door", Door);
+
+  geometry_msgs::msg::PoseStamped Party;
+  Party.header.frame_id = "map";
+  Party.pose.orientation.w = 1.0;
+  Party.pose.position.x = 2.53;
+  Party.pose.position.y = 5.62;
+  blackboard->set("Party", Party);
+
+  geometry_msgs::msg::PoseStamped Barman;
+  Barman.header.frame_id = "map";
+  Barman.pose.orientation.w = 1.0;
+  Barman.pose.position.x = 1.17;
+  Barman.pose.position.y = 6.5;
+  blackboard->set("Barman", Barman);
+
+  //blackboard->set("Point", Person);
+
   BT::Tree tree = factory.createTreeFromFile(xml_file, blackboard);
 
   auto publisher_zmq = std::make_shared<BT::PublisherZMQ>(tree, 10, 1666, 1667);

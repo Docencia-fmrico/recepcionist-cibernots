@@ -22,35 +22,35 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def generate_launch_description():
 
-    image2tf_person_cmd = IncludeLaunchDescription(
-                          PythonLaunchDescriptionSource(os.path.join(
-                            get_package_share_directory('seekandcapture_cibernots'),
-                            'launch',
-                            'image2tf_person.launch.py'))
-                          )
+    # image2tf_person_cmd = IncludeLaunchDescription(
+    #                       PythonLaunchDescriptionSource(os.path.join(
+    #                         get_package_share_directory('recepcionist_cibernots'),
+    #                         'launch',
+    #                         'image2tf_person.launch.py'))
+    #                       )
     
-    image2tf_obj_cmd = IncludeLaunchDescription(
-                          PythonLaunchDescriptionSource(os.path.join(
-                            get_package_share_directory('recepcionist_cibernots'),
-                            'launch',
-                            'image2tf_obj.launch.py'))
-                          )
+    # image2tf_obj_cmd = IncludeLaunchDescription(
+    #                       PythonLaunchDescriptionSource(os.path.join(
+    #                         get_package_share_directory('recepcionist_cibernots'),
+    #                         'launch',
+    #                         'image2tf_obj.launch.py'))
+    #                       )
     
-    # recepcionist_cmd = Node(package='recepcionist_cibernots',
-    #                               executable='recepcionist',
-    #                               output='screen',
-    #                               parameters=[{
-    #                                 'use_sim_time': False
-    #                               }],
-    #                               remappings=[
-    #                                 ('output_vel', '/cmd_vel'),
-    #                                 ('output_sound', '/commands/sound')
-    #                               ]
-    #                               )
+    recepcionist_cmd = Node(package='recepcionist_cibernots',
+                                  executable='recepcionist',
+                                  output='screen',
+                                  parameters=[{
+                                    'use_sim_time': False
+                                  }],
+                                  remappings=[
+                                    # ('output_vel', '/cmd_vel'),
+                                    # ('output_sound', '/commands/sound')
+                                  ]
+                                  )
 
     ld = LaunchDescription()
-    # ld.add_action(recepcionist_cmd)
-    ld.add_action(image2tf_person_cmd)
-    ld.add_action(image2tf_obj_cmd)
+    ld.add_action(recepcionist_cmd)
+    # ld.add_action(image2tf_person_cmd)
+    # ld.add_action(image2tf_obj_cmd)
 
     return ld
