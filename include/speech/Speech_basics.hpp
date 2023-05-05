@@ -29,16 +29,9 @@ private:
   T value_;
 };
 
-class SpeechBasics : public DialogInterface {
+class SpeechBasics : public rclcpp::Node {
 public:
-  SpeechBasics() : str_var_(std::make_shared<SharedVariable<std::string>>()) {
-    this->registerCallback(std::bind(&SpeechBasics::noIntentCB, this, ph::_1));
-    this->registerCallback(std::bind(&SpeechBasics::welcomeIntentCB, this, ph::_1), "Default Welcome Intent");
-    this->registerCallback(std::bind(&SpeechBasics::drinks, this, ph::_1), "Drinks");
-    this->registerCallback(std::bind(&SpeechBasics::name, this, ph::_1), "Name");
-    this->registerCallback(std::bind(&SpeechBasics::askdrink, this, ph::_1), "Ask Drink");
-    this->registerCallback(std::bind(&SpeechBasics::introduce, this, ph::_1), "Introduce Guest");
-  }
+  SpeechBasics();
 
   void noIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
   void welcomeIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
@@ -48,8 +41,6 @@ public:
   void askdrink(dialogflow_ros2_interfaces::msg::DialogflowResult result);
 
 private:
-  void speak(const std::string& phrase);
-
   std::shared_ptr<SharedVariable<std::string>> str_var_;
 };
 

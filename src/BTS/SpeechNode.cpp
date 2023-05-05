@@ -11,19 +11,19 @@ class SpeechNode : public BT::ActionNode {
   SpeechNode(const std::string& name, const BT::NodeConfiguration& config)
       : BT::ActionNode(name, config) {
     // Inicializar variables compartidas
-    this->getInput<std::string>("name", name_);
-    this->getInput<std::string>("drink", drink_);
+    //this->getInput<std::string>("name", name_);
+    //this->getInput<std::string>("drink", drink_);
 
     // Crear objeto rclcpp::Node
     node_ = rclcpp::Node::make_shared("speech_node");
   }
 
   static BT::PortsList providedPorts() {
-    // Definir puertos de entrada y salida
+    /*// Definir puertos de entrada y salida
     return {
         BT::InputPort<std::string>("name", "Name of the guest"),
         BT::InputPort<std::string>("drink", "Drink of the guest"),
-    };
+    };*/
   }
 
   BT::NodeStatus tick() override {
