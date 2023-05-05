@@ -5,22 +5,15 @@
         <Repeat num_cycles="2">
             <Sequence>
                 <Action ID="GoTo" Point="{Door}"/>
-                <Action ID="GoTo" Point="Hall"/>
-                <Action ID="GoTo" Point="chair"/>
+                <Action ID="GoTo" Point="{Party}"/>
+                <Action ID="GoTo" Point="{Barman}"/>
             </Sequence>
         </Repeat>
     </BehaviorTree>
     <!-- ////////// -->
     <TreeNodesModel>
-        <Action ID="AskGuest"/>
-        <Action ID="DescribeLastGuest"/>
         <Action ID="GoTo">
             <input_port name="Point"/>
-        </Action>
-        <Condition ID="IfSecondGuest"/>
-        <Action ID="IntroduceGuest"/>
-        <Action ID="SearchSeat">
-            <output_port name="Seat"/>
         </Action>
     </TreeNodesModel>
     <!-- ////////// -->
