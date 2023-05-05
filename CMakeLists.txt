@@ -27,6 +27,9 @@ find_package(behaviortree_cpp_v3 REQUIRED)
 find_package(kobuki_ros_interfaces REQUIRED)
 find_package(control_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(dialogflow_ros2_interfaces REQUIRED)
+find_package(std_srvs REQUIRED)
+find_package(sound_play REQUIRED)
 
 find_package(OpenCV REQUIRED)
 
@@ -60,6 +63,9 @@ set(dependencies
   control_msgs
   kobuki_ros_interfaces
   std_msgs
+  dialogflow_ros2_interfaces
+  std_srvs
+  sound_play
 )
 
 add_library(${PROJECT_NAME} SHARED
@@ -73,12 +79,14 @@ ament_target_dependencies(${PROJECT_NAME} ${dependencies})
 # add_library(bt_detectobject_node SHARED src/bt_nodes/Detectobject.cpp)
 # add_library(bt_reachedobject_node SHARED src/bt_nodes/Reachedobject.cpp)
 # add_library(bt_searchobject_node SHARED src/bt_nodes/Searchobject.cpp)
+add_library(bt_dialog_node SHARED src/BTS/Talk.cpp src/speech/Speech_basics.cpp)
 
 list(APPEND plugin_libs
   # bt_SearchSeat_node
   # bt_detectobject_node
   # bt_reachedobject_node
   # bt_searchobject_node
+  bt_dialog_node
 )
 
 foreach(bt_plugin ${plugin_libs})

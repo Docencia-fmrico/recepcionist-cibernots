@@ -79,4 +79,18 @@ class SpeechBasics: public DialogInterface
 
   private:
 };
+
+int main(int argc, char** argv)
+{
+  rclcpp::init(argc, argv);
+
+  auto forwarder = std::make_shared<gb_dialog::ExampleDF>();
+  forwarder->listen();
+
+  rclcpp::executors::MultiThreadedExecutor executor;
+  executor.add_node(forwarder);
+  executor.spin();
+
+  return 0;
+}
 }  // namespace gb_dialog
