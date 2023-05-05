@@ -114,9 +114,6 @@ add_executable(imageobject_tf src/detector_improved_main.cpp)
 ament_target_dependencies(imageobject_tf ${dependencies})
 target_link_libraries(imageobject_tf ${PROJECT_NAME})
 
-add_executable(recepcionist src/bt_recepcionist.cpp)
-ament_target_dependencies(recepcionist ${dependencies})
-target_link_libraries(recepcionist ${ZMQ_LIBRARIES})
 
 install(TARGETS
   ${PROJECT_NAME}

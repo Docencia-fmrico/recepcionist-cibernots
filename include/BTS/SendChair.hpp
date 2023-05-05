@@ -1,4 +1,4 @@
-// Copyright 2023 cibernots
+// Copyright 2021 Intelligent Robotics Lab
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,15 +15,21 @@
 #ifndef BTS__SENDCHAIR_HPP_
 #define BTS__SENDCHAIR_HPP_
 
+#include <tf2_ros/buffer.h>
+#include <tf2_ros/transform_listener.h>
+
 #include <string>
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 
 #include "rclcpp/rclcpp.hpp"
+#include "kobuki_ros_interfaces/msg/sound.hpp"
+#include "std_msgs/msg/string.hpp"
 
 namespace recepcionist_cibernots
 {
+
 class SendChair : public BT::ActionNodeBase
 {
 public:
@@ -40,9 +46,17 @@ public:
   }
 
 private:
+  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr ch_pub_;
   rclcpp::Node::SharedPtr node_;
+
+  // buffer and listener for tf
+  tf2::BufferCore tf_buffer_;
+  tf2_ros::TransformListener tf_listener_;
+  int counter_;
+  std::string chairs_[4] = {"Chair1","Chair2","Chair3","Chair4"};
+  int angs_chairs_[4];
 };
 
 }  // namespace recepcionist_cibernots
 
-#endif  // BTS__SENDCHAIR_HPP_
+#endif  // BT_NODES__SENDCHAIR_HPP_

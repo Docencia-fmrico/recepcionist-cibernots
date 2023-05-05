@@ -1,4 +1,4 @@
-// Copyright 2023 cibernots
+// Copyright 2023 Intelligent Robotics Lab
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 
+#include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 namespace recepcionist_cibernots
@@ -41,10 +42,12 @@ public:
   }
 
 private:
-    rclcpp::Node::SharedPtr node_;
+  rclcpp::Node::SharedPtr node_;
+  // Velocities publisher
+  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub_;
   
 };
 
 }  // namespace recepcionist_cibernots
 
-#endif  // BTS__SEARCHCHAIR_HPP_
+#endif  // BT_NODES__SEARCHCHAIR_HPP_
