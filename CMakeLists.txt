@@ -76,19 +76,18 @@ add_library(${PROJECT_NAME} SHARED
 ament_target_dependencies(${PROJECT_NAME} ${dependencies})
 
 # add_library(bt_SearchSeat_node SHARED src/BTS/SearchSeat.cpp)
-# add_library(bt_SpeechNode_node SHARED src/BTS/SpeechNode.cpp)
+ add_library(bt_SpeechNode_node SHARED src/BTS/SpeechNode.cpp)
 # add_library(bt_detectobject_node SHARED src/bt_nodes/Detectobject.cpp)
 # add_library(bt_reachedobject_node SHARED src/bt_nodes/Reachedobject.cpp)
 # add_library(bt_searchobject_node SHARED src/bt_nodes/Searchobject.cpp)
-add_library(bt_dialog_node SHARED src/BTS/Talk.cpp src/speech/Speech_basics.cpp)
+
 
 list(APPEND plugin_libs
   # bt_SearchSeat_node
-  # bt_SpeechNode_node
+  bt_SpeechNode_node
   # bt_detectobject_node
   # bt_reachedobject_node
   # bt_searchobject_node
-  bt_dialog_node
 )
 
 foreach(bt_plugin ${plugin_libs})
@@ -104,6 +103,7 @@ target_link_libraries(darknet_objdetection_tf ${PROJECT_NAME})
 # ament_target_dependencies(recepcionist ${dependencies})
 # target_link_libraries(recepcionist ${ZMQ_LIBRARIES})
 
+
 add_executable(objdetection_2d_to_3d_depth_tf src/detection_2d_to_3d_depth_main.cpp)
 ament_target_dependencies(objdetection_2d_to_3d_depth_tf ${dependencies})
 target_link_libraries(objdetection_2d_to_3d_depth_tf ${PROJECT_NAME})
@@ -112,6 +112,10 @@ add_executable(imageobject_tf src/detector_improved_main.cpp)
 ament_target_dependencies(imageobject_tf ${dependencies})
 target_link_libraries(imageobject_tf ${PROJECT_NAME})
 
+add_executable(speech_basics_main src/speech_basics_main.cpp)
+ament_target_dependencies(speech_basics_main ${dependencies})
+target_link_libraries(speech_basics_main ${PROJECT_NAME})
+
 install(TARGETS
   ${PROJECT_NAME}
   ${plugin_libs}
@@ -119,6 +123,7 @@ install(TARGETS
   darknet_objdetection_tf
   objdetection_2d_to_3d_depth_tf
   imageobject_tf
+  speech_basics_main
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME}

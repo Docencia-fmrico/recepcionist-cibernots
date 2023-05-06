@@ -1,4 +1,4 @@
-#include "gb_dialog/DialogInterface.hpp"
+#include "gb_dialog/DialogInterfaces.hpp"
 #include "sound_play.hpp"
 #include "rclcpp/rclcpp.hpp"
 
@@ -6,7 +6,7 @@ int main(int argc, char** argv)
 {
   rclcpp::init(argc, argv);
 
-  auto forwarder = std::make_shared<gb_dialog::ExampleDF>();
+  auto forwarder = std::make_shared<gb_dialog::DialogInterface>();
   forwarder->listen();
 
   rclcpp::executors::MultiThreadedExecutor executor;

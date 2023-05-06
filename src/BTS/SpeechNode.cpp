@@ -2,14 +2,15 @@
 #include <string>
 #include "rclcpp/rclcpp.hpp"
 
-#include "gb_dialog/SpeechBasics.hpp"
+#include "BTS/SpeechNode.hpp"
+#include "gb_dialog/DialogInterfaces.hpp"
 
 namespace gb_dialog {
 
-class SpeechNode : public BT::ActionNode {
+class SpeechNode : public BT::ActionNodeBase {
  public:
   SpeechNode(const std::string& name, const BT::NodeConfiguration& config)
-      : BT::ActionNode(name, config) {
+      : BT::ActionNodeBase(name, config) {
     // Inicializar variables compartidas
     //this->getInput<std::string>("name", name_);
     //this->getInput<std::string>("drink", drink_);
@@ -26,12 +27,12 @@ class SpeechNode : public BT::ActionNode {
     };*/
   }
 
-  BT::NodeStatus tick() override {
+  BT::NodeStatus tick() {
     // Crear suscripción al topic "/speech"
-    auto subscriber = node_->create_subscription<gb_dialog::Speech>(
+    auto subscriber = node_->create_subscription<gb_dialog::SpeechNode>(
         "/speech",
         10,
-        [this](const gb_dialog::Speech::SharedPtr msg) {
+        [this](const gb_dialog::SpeechNode::SharedPtr msg) {
           // Actualizar variables compartidas
           if (msg->intent == "Drinks") {
             drink_ = msg->param;
