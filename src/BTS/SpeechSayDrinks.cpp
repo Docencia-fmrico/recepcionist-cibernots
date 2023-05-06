@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 
-#include "BTS/SpeechDrinks.hpp"
+#include "BTS/SpeechSayDrinks.hpp"
 #include "gb_dialog/DialogInterfaces.hpp"
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
@@ -11,20 +11,28 @@
 
 namespace recepcionist_cibernots {
 
-SpeechDrinks::SpeechDrinks(const std::string& name, const BT::NodeConfiguration& config)
+SpeechSayDrinks::SpeechSayDrinks(const std::string& name, const BT::NodeConfiguration& config)
     : BT::SyncActionNode(name, config)
 {
   config().blackboard->get("node", node_);
   config().blackboard->get("dialog_iface", dialog_iface_);
 }
 
-BT::NodeStatus SpeechDrinks::tick()
+BT::NodeStatus SpeechSayDrinks::tick()
 {
+  std::ostringstream oss;
+  std::string phrase;
+
+  std::string drinkstr;
+
   rclcpp::spin_some(dialog_iface_.get_node_base_interface());
   dialog_iface_->listen();
-  if (result_.intent == "Drink") {    
-    config().blackboard->set("drink", result_.intent.param_);
-    dialog_iface_->speak("Sure, I'll bring you a drink.");
+  if (result_.intent == "Ask Drink") {    
+    config().blackboard->get("drink", drinkstr);
+    oss << "I want a " << name << " for our guest";
+    phrase = oss.str();
+  
+    dialog_iface_->speak(phrase);
     
     return BT::NodeStatus::SUCCESS;
   } else {
@@ -38,5 +46,5 @@ BT::NodeStatus SpeechDrinks::tick()
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<recepcionist_cibernots::SpeechDrinks>("SpeechDrinks");
+  factory.registerNodeType<recepcionist_cibernots::SpeechSayDrinks>("SpeechSayDrinks");
 }

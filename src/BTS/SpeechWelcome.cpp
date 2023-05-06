@@ -14,18 +14,15 @@ namespace recepcionist_cibernots {
 SpeechDrinks::SpeechDrinks(const std::string& name, const BT::NodeConfiguration& config)
     : BT::SyncActionNode(name, config)
 {
-  config().blackboard->get("node", node_);
-  config().blackboard->get("dialog_iface", dialog_iface_);
 }
 
 BT::NodeStatus SpeechDrinks::tick()
 {
   rclcpp::spin_some(dialog_iface_.get_node_base_interface());
   dialog_iface_->listen();
-  if (result_.intent == "Drink") {    
-    config().blackboard->set("drink", result_.intent.param_);
-    dialog_iface_->speak("Sure, I'll bring you a drink.");
-    
+  if (result_.intent == "Default Welcom Intent") {    
+    dialog_iface_->speak(result_.fulfillment_text);
+
     return BT::NodeStatus::SUCCESS;
   } else {
     return BT::NodeStatus::RUNNING;

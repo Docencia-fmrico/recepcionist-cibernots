@@ -76,7 +76,11 @@ add_library(${PROJECT_NAME} SHARED
 ament_target_dependencies(${PROJECT_NAME} ${dependencies})
 
 # add_library(bt_SearchSeat_node SHARED src/BTS/SearchSeat.cpp)
- add_library(bt_SpeechDrinks_node SHARED src/BTS/SpeechDrinks.cpp)
+add_library(bt_SpeechDrinks_node SHARED src/BTS/SpeechDrinks.cpp)
+add_library(bt_SpeechSayDrinks_node SHARED src/BTS/SpeechSayDrinks.cpp)
+add_library(bt_SpeechName_node SHARED src/BTS/SpeechName.cpp)
+add_library(bt_SpeechSayName_node SHARED src/BTS/SpeechSayName.cpp)
+add_library(bt_SpeechWelcome_node SHARED src/BTS/SpeechWelcome.cpp)
 # add_library(bt_detectobject_node SHARED src/bt_nodes/Detectobject.cpp)
 # add_library(bt_reachedobject_node SHARED src/bt_nodes/Reachedobject.cpp)
 # add_library(bt_searchobject_node SHARED src/bt_nodes/Searchobject.cpp)
@@ -85,6 +89,10 @@ ament_target_dependencies(${PROJECT_NAME} ${dependencies})
 list(APPEND plugin_libs
   # bt_SearchSeat_node
   bt_SpeechDrinks_node
+  bt_SpeechSayDrinks_node
+  bt_SpeechName_node
+  bt_SpeechSayName_node
+  bt_SpeechWelcome_node
   # bt_detectobject_node
   # bt_reachedobject_node
   # bt_searchobject_node
