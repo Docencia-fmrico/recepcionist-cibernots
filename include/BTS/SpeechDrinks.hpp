@@ -1,12 +1,15 @@
-#ifndef BTS__SPEECHNODE_HPP_
-#define BTS__SPEECHNODE_HPP_
-
-#include <string>
+#ifndef BT_NODES__SpeechNode_HPP_
+#define BT_NODES__SpeechNode_HPP_
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 
+#include <string>
+#include "gb_dialog/DialogInterfaces.hpp"
+#include "sound_play.hpp"
+#include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
+#include <memory>
 
 namespace recepcionist_cibernots
 {
@@ -25,14 +28,13 @@ public:
   {
     return BT::PortsList({});
   }
+  dialogflow_ros2_interfaces::msg::DialogflowResult result_;
 
 private:
-    rclcpp::Node::SharedPtr node_;
-    std::string name_;
-    std::string drink_;
-  
+  rclcpp::Node::SharedPtr node_;
 };
 
 }  // namespace recepcionist_cibernots
 
-#endif  // BTS__SPEECHNODE_HPP_
+#endif  // BT_NODES__SpeechNode_HPP_
+
