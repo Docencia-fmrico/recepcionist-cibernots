@@ -16,15 +16,19 @@
 #define BTS__WAITPERSON_HPP_
 
 #include <string>
+#include <chrono>
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
+
+#include <tf2_ros/buffer.h>
+#include <tf2_ros/transform_listener.h>
 
 #include "rclcpp/rclcpp.hpp"
 
 namespace recepcionist_cibernots
 {
-
+using namespace std::chrono_literals;
 class WaitPerson : public BT::ActionNodeBase
 {
 public:
@@ -41,7 +45,13 @@ public:
   }
 
 private:
-    rclcpp::Node::SharedPtr node_;
+  rclcpp::Node::SharedPtr node_;
+
+  // buffer and listener for tf
+  tf2::BufferCore tf_buffer_;
+  tf2_ros::TransformListener tf_listener_;
+
+  const rclcpp::Duration TF_PERSON_TIMEOUT {1s};
   
 };
 
