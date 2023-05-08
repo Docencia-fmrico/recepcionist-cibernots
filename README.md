@@ -14,6 +14,7 @@
 - [How to execute the programs](#How-to-execute-the-programs)
 - [Tf explanation](#Tf-explanation)
 - [Behavior tree](#Behavior-tree)
+- [DialogFlow explanation](#DialogFlow-explanation)
 - [BT NODES](#BT-NODES)
 - [license](#license)
 - [Video_demostration](#Video_demostration)
@@ -27,7 +28,7 @@ To use this program, you will need to have the following packages installed:
 - Groot: This is a graphical user interface (GUI) program that will allow you to manually control the robot. It is optional, but highly recommended.
 - BehaviorTree.CPP: for the robot's actuaction we will use behaviour trees, by accessing the following link, you can clone the repository and follow the compilation steps: https://github.com/facontidavide/BehaviorTree.CPP
 - ZMQLIB: as the behavior tree is external to ros, it needs an IOT communication middleware for the communication between nodes, this is why we use ZMQ.
-- DialogFlow: 
+- DialogFlow: GB-dialog contains the library DialogInterface from which we will inherit to develop our dialogue actions. Each action would be specific to an intent (Dialogflow concepts).
 
 You can install Darknet ROS by following the instructions in its GitHub repository:
 
@@ -62,6 +63,41 @@ sudo apt-get install libzmq3-dev libboost-dev
 
 ```
 
+You can install install DialogFlow following the nexts steps:
+``` bash
+#If you don't have vcs tool, install it with:
+sudo apt-get install python3-vcstool wget libgst-dev libgst7 libgstreamer1.0-* libgstreamer-plugins-base1.0-dev
+
+cd <workspace>/src
+mkdir dialog
+cd dialog
+wget https://raw.githubusercontent.com/IntelligentRoboticsLabs/gb_dialog/ros2/gb_dialog.repos
+vcs import < gb_dialog.repos
+
+cd <workspace>
+rosdep install --from-paths src --ignore-src -r -y
+
+#install requirements:
+sudo apt-get install portaudio19-dev
+cd <workspace>/src/dialog/dialogflow_ros2
+pip3 install -r requirements.txt
+```
+
+Finally, follow this steps:
+Google Cloud and DialogFlow Setup
+
+    Go to Google Cloud Console.
+    Create a new project.
+    Go to the Kick Setup.
+    Enable API.
+    Create Service Account.
+    Click on your service account. Create key & download the JSON File. Rename and move it t your HOME as ~/df_api.json.
+    Go to DialogFlow Console.
+    Create new Agent & select the project.
+    Edit dialogflow_ros/config/param.yaml and write down your project id. You can find it in the DialogFlow Console, clicking in the gear icon.
+    Add export ```bash GOOGLE_APPLICATION_CREDENTIALS='/home/<user>/df_api.json'`` to your .bashrc and change user.
+    
+    
 ## How to execute the programs
 
 First connect the base and the camera then :
@@ -99,8 +135,7 @@ Remember that the most basic operation is a tick (a function call) that propagat
 ## BT NODES
 
 
-    
-```
+
 
 ## Implements
 
