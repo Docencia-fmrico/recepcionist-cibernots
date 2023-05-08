@@ -85,16 +85,16 @@ pip3 install -r requirements.txt
 
 Finally, follow this steps:
 Google Cloud and DialogFlow Setup
-    1. Go to Google Cloud Console.
-    2. Create a new project.
-    3. Go to the Kick Setup.
-    4. Enable API.
-    5. Create Service Account.
-    6. Click on your service account. Create key & download the JSON File. Rename and move it t your HOME as ~/df_api.json.
-    7. Go to DialogFlow Console.
-    8. Create new Agent & select the project.
-    9. Edit dialogflow_ros/config/param.yaml and write down your project id. You can find it in the DialogFlow Console, clicking in the gear icon.
-    10. Add export GOOGLE_APPLICATION_CREDENTIALS='/home/<user>/df_api.json' to your .bashrc and change user.
+- Go to Google Cloud Console.
+- Create a new project.
+- Go to the Kick Setup.
+- Enable API.
+- Create Service Account.
+- Click on your service account. Create key & download the JSON File. Rename and move it t your HOME as ~/df_api.json.
+- Go to DialogFlow Console.
+- Create new Agent & select the project.
+- Edit dialogflow_ros/config/param.yaml and write down your project id. You can find it in the DialogFlow Console, clicking in the gear icon.
+- Add export GOOGLE_APPLICATION_CREDENTIALS='/home/<user>/df_api.json' to your .bashrc and change user.
     
     
 ## How to execute the programs
