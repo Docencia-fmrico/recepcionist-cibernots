@@ -12,6 +12,7 @@
 - [Table of Contents](#table-of-contents)
 - [Dependencies](#Dependencies)
 - [How to execute the programs](#How-to-execute-the-programs)
+- [Nav explanation](#Nav-explanation)
 - [Tf explanation](#Tf-explanation)
 - [Behavior tree](#Behavior-tree)
 - [DialogFlow explanation](#DialogFlow-explanation)
@@ -29,6 +30,7 @@ To use this program, you will need to have the following packages installed:
 - BehaviorTree.CPP: for the robot's actuaction we will use behaviour trees, by accessing the following link, you can clone the repository and follow the compilation steps: https://github.com/facontidavide/BehaviorTree.CPP
 - ZMQLIB: as the behavior tree is external to ros, it needs an IOT communication middleware for the communication between nodes, this is why we use ZMQ.
 - DialogFlow: GB-dialog contains the library DialogInterface from which we will inherit to develop our dialogue actions. Each action would be specific to an intent (Dialogflow concepts).
+- Nav:
 
 You can install Darknet ROS by following the instructions in its GitHub repository:
 
