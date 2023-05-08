@@ -1,6 +1,6 @@
-# Seek_and_capture_cibernots
+# recepcionist_cibernots
 
-<h3 align="center">Seek and Capture </h3>
+<h3 align="center">Recepcionist </h3>
 
 <div align="center">
 <img width=100px src="https://img.shields.io/badge/status-finished-brightgreen" alt="explode"></a>
