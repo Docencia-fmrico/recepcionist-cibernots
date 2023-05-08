@@ -36,15 +36,15 @@ public:
     const BT::NodeConfiguration & conf);
 
   void noIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
-  void welcomeIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
-  void requestNameIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
-  void igRequestIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
+  void nameCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
+  void drinkCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
+  void bartenderCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
 
   void halt() {}
   BT::NodeStatus tick();
   static BT::PortsList providedPorts()
   {
-    return {BT::InputPort<std_msgs::msg::String>("Request")};
+    return {BT::InputPort<std_msgs::msg::String>("name")};
   }
 
 
@@ -52,9 +52,20 @@ private:
   rclcpp::Node::SharedPtr node_;
   // dialogflow_ros2_interfaces::msg::DialogflowResult dialog_;
   gb_dialog::DialogInterface dialog_;
+
+  // Variable para guardar el caso de uso
+  std::string case_;
+
+  // Variable para guardar el nombre de tipo dialogflow_ros2_interfaces::msg::DialogflowResult
   std::string name_;
 
+  // Variable para guardar la bebida de tipo dialogflow_ros2_interfaces::msg::DialogflowResult
+  std::string drink_;
+
   bool listening_;
+  //std::string request_;
+
+  
 };
 
 }  // namespace recepcionist_cibernots
