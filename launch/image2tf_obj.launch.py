@@ -23,12 +23,13 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def generate_launch_description():
   
-    # image2tf_person_cmd = IncludeLaunchDescription(
-    #                       PythonLaunchDescriptionSource(os.path.join(
-    #                         get_package_share_directory('seekandcapture_cibernots'),
-    #                         'launch',
-    #                         'image2tf_person.launch.py'))
-    #                       )
+    # Este launcher ya lanza darknet_ros, por lo que no es necesario incluir darknet de nuevo
+    image2tf_person_cmd = IncludeLaunchDescription(
+                          PythonLaunchDescriptionSource(os.path.join(
+                            get_package_share_directory('seekandcapture_cibernots'),
+                            'launch',
+                            'image2tf_person.launch.py'))
+                          )
     
     recepcionist_cmd = Node(package='recepcionist_cibernots',
                                   executable='recepcionist',
@@ -42,7 +43,7 @@ def generate_launch_description():
                                   ]
                                   )
 
-    darknet_cmd = Node(package='recepcionist_cibernots',
+    darknetobj_cmd = Node(package='recepcionist_cibernots',
                         executable='darknet_objdetection_tf',
                         output='screen',
                         parameters=[{
@@ -50,10 +51,10 @@ def generate_launch_description():
                         }],
                         remappings=[
                           ('input_bbxs_detection', '/darknet_ros/bounding_boxes'),
-                          ('output_detection_2d', '/detection2Darray')
+                          ('output_detection_2d', '/objdetection2Darray')
                         ])
 
-    detection2d_3d_cmd = Node(package='recepcionist_cibernots',
+    objdetection2d_3d_cmd = Node(package='recepcionist_cibernots',
                                 executable='objdetection_2d_to_3d_depth_tf',
                                 output='screen',
                                 parameters=[{
@@ -61,25 +62,26 @@ def generate_launch_description():
                                 }],
                                 remappings=[
                                   ('input_depth', '/camera/depth/image_raw'),
-                                  ('input_detection_2d', '/detection2Darray'),
+                                  ('input_detection_2d', '/objdetection2Darray'),
                                   ('camera_info', '/camera/depth/camera_info'),
-                                  ('output_detection_3d', '/detection3Darray')
+                                  ('output_detection_3d', '/objdetection3Darray')
                                 ])
 
-    detection3d_objtf_cmd = Node(package='recepcionist_cibernots',
+    objdetection3d_objtf_cmd = Node(package='recepcionist_cibernots',
                                       executable='imageobject_tf',
                                       output='screen',
                                       parameters=[{
                                         'use_sim_time': False
                                       }],
                                       remappings=[
-                                        ('input_detection_3d', '/detection3Darray')
+                                        ('input_detection_3d', '/objdetection3Darray')
                                       ])
 
     ld = LaunchDescription()
-    ld.add_action(darknet_cmd)
-    ld.add_action(detection2d_3d_cmd)
-    ld.add_action(detection3d_objtf_cmd)
+    ld.add_action(darknetobj_cmd)
+    ld.add_action(objdetection2d_3d_cmd)
+    ld.add_action(objdetection3d_objtf_cmd)
     ld.add_action(recepcionist_cmd)
+    ld.add_action(image2tf_person_cmd)
 
     return ld
