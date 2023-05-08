@@ -86,9 +86,10 @@ Ask::tick()
 
   // dependiendo del puerto de entrada, se ejecuta una accion u otra
   // si el puerto de entrada es "Request", se ejecuta la accion de pedir el nombre
-  case_ = getInput<std::string>("case").value();
-  name_ = getInput<std::string>("name_received").value();
-  drink_ = getInput<std::string>("drink_received").value();
+  
+  case_ = getInput<std::string>("case", caseAsk);
+  name_ = getInput<std::string>("name_received", nameAsk);
+  drink_ = getInput<std::string>("drink_received", drinkAsk);
 
   
   if (status() == BT::NodeStatus::IDLE)
