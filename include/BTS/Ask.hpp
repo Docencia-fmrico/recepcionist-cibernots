@@ -23,6 +23,8 @@
 #include "rclcpp/rclcpp.hpp"
 #include <std_msgs/msg/string.hpp>
 
+#include "BTS/DialogFlow/DialogInterface.hpp"
+
 namespace recepcionist_cibernots
 {
 //using namespace std::std_msgs;
@@ -33,16 +35,26 @@ public:
     const std::string & xml_tag_name,
     const BT::NodeConfiguration & conf);
 
+  void noIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
+  void welcomeIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
+  void requestNameIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
+  void igRequestIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
+
   void halt() {}
   BT::NodeStatus tick();
-
   static BT::PortsList providedPorts()
   {
     return {BT::InputPort<std_msgs::msg::String>("Request")};
   }
 
+
 private:
   rclcpp::Node::SharedPtr node_;
+  // dialogflow_ros2_interfaces::msg::DialogflowResult dialog_;
+  gb_dialog::DialogInterface dialog_;
+  std::string name_;
+
+  bool listening_;
 };
 
 }  // namespace recepcionist_cibernots

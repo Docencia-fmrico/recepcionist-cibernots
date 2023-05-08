@@ -40,7 +40,7 @@ def generate_launch_description():
                                   executable='recepcionist',
                                   output='screen',
                                   parameters=[{
-                                    'use_sim_time': False
+                                    'use_sim_time': True
                                   }],
                                   remappings=[
                                     # ('output_vel', '/cmd_vel'),
