@@ -65,7 +65,15 @@ WaitPerson::tick()
     return BT::NodeStatus::RUNNING;
   }
 
-  return BT::NodeStatus::SUCCESS;
+  // Calculate distance using pythagoras theorem
+  double distance = sqrt(odom2person.getOrigin().x()*odom2person.getOrigin().x() + odom2person.getOrigin().y()*odom2person.getOrigin().y());
+
+  // If the distance is less than 1.5, the person is there
+  if (std::abs(distance) <= 1.5) {
+    return BT::NodeStatus::SUCCESS;
+  }
+
+  return BT::NodeStatus::RUNNING;
 }
 
 }  // namespace recepcionist_cibernots
