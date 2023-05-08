@@ -39,18 +39,20 @@ Ask::Ask(
 {
   listening_ = true;
   name_ = "";
+  drink_ = "";
+
   config().blackboard->get("node", node_);
 
     dialog_.registerCallback(std::bind(&Ask::noIntentCB, this, ph::_1));
     dialog_.registerCallback(
-      std::bind(&Ask::welcomeIntentCB, this, ph::_1),
-      "Default Welcome Intent");
+      std::bind(&Ask::nameCB, this, ph::_1),
+      "nameCB");
     dialog_.registerCallback(
-      std::bind(&Ask::requestNameIntentCB, this, ph::_1),
-      "RequestName");
+      std::bind(&Ask::drinkCB, this, ph::_1),
+      "drinkCB");
     dialog_.registerCallback(
-      std::bind(&Ask::igRequestIntentCB, this, ph::_1),
-      "IgRequest");
+      std::bind(&Ask::bartenderCB, this, ph::_1),
+      "bartenderCB");
 }
 
 
@@ -59,28 +61,47 @@ void Ask::noIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result)
   name_ = result.parameters[1].value[0];
 }
 
-void Ask::welcomeIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result)
+void Ask::nameCB(dialogflow_ros2_interfaces::msg::DialogflowResult result)
 {
   name_ = result.parameters[1].value[0];
+  setOutput<std::string>("name_received", name_);
 }
 
-void Ask::requestNameIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result)
+void Ask::drinkCB(dialogflow_ros2_interfaces::msg::DialogflowResult result)
 {
-  name_ = result.parameters[1].value[0];
+  drink_ = result.parameters[1].value[0];
+  setOutput<std::string>("drink_received", drink_);
 }
 
-void Ask::igRequestIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result)
+void Ask::bartenderCB(dialogflow_ros2_interfaces::msg::DialogflowResult result)
 {
-  name_ = result.parameters[1].value[0];
+  
 }
+
 
 
 BT::NodeStatus
 Ask::tick()
 {
+
+  // dependiendo del puerto de entrada, se ejecuta una accion u otra
+  // si el puerto de entrada es "Request", se ejecuta la accion de pedir el nombre
+  case_ = getInput<std::string>("case").value();
+  name_ = getInput<std::string>("name_received").value();
+  drink_ = getInput<std::string>("drink_received").value();
+
+  
   if (status() == BT::NodeStatus::IDLE)
   {
-    dialog_.speak("Hi, what's your name?");
+      if (case_ == "ask name"){
+        dialog_.speak("What is your name?");
+      } else if (case_ == "say name") {
+        dialog_.speak("Hi everyone, this is " + name_); 
+      } else if (case_ == "ask drink") {
+        dialog_.speak("What do you want to drink?");
+      } else if (case_ == "say drink") {
+        dialog_.speak("Hi bartender, I want a " + drink_);
+      }
   }
 
   rclcpp::spin_some(dialog_.get_node_base_interface());
@@ -91,14 +112,21 @@ Ask::tick()
     dialog_.listen();
   }
 
-  if (name_ == "")
+  if (case_ == "")
   {
     return BT::NodeStatus::RUNNING;
   }
 
-  dialog_.speak("Follow me " + name_);
-  setOutput("Request", name_);
-  name_ = "";
+
+  if (case_ == "ask name"){
+    dialog_.speak("Hi " + name_ + ", what do you want to drink?");
+  } else if (case_ == "ask drink"){
+    dialog_.speak("Ok " + name_ + ", I will ask the bartender for a " + drink_);
+  } else if (case_ == "say drink"){
+    dialog_.speak("Thak you for the " + drink_ + ", bartender");
+  }
+
+
   listening_ = false;
   
   return BT::NodeStatus::SUCCESS;
