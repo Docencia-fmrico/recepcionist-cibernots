@@ -58,9 +58,9 @@ int main(int argc, char * argv[])
   BT::BehaviorTreeFactory factory;
   BT::SharedLibrary loader;
   
-  // factory.registerFromPlugin(loader.getOSName("bt_goTo_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_goTo_node"));
   // factory.registerFromPlugin(loader.getOSName("bt_waitPerson_node"));
-  factory.registerFromPlugin(loader.getOSName("bt_ask_node"));
+  // factory.registerFromPlugin(loader.getOSName("bt_ask_node"));
   // factory.registerFromPlugin(loader.getOSName("bt_introduce_node"));
   // factory.registerFromPlugin(loader.getOSName("bt_ifChair_node"));
   // factory.registerFromPlugin(loader.getOSName("bt_searchChair_node"));
@@ -68,33 +68,61 @@ int main(int argc, char * argv[])
   // factory.registerFromPlugin(loader.getOSName("bt_sendChair_node"));
 
   std::string pkgpath = ament_index_cpp::get_package_share_directory("recepcionist_cibernots");
-  // std::string xml_file = pkgpath + "/behavior_tree_xml/Goto.xml";
+  std::string xml_file = pkgpath + "/behavior_tree_xml/Goto.xml";
   // std::string xml_file = pkgpath + "/behavior_tree_xml/bt_recepcionist.xml";
-  std::string xml_file = pkgpath + "/behavior_tree_xml/Ask.xml";
+  // std::string xml_file = pkgpath + "/behavior_tree_xml/Ask.xml";
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set("node", node);
 
-  // geometry_msgs::msg::PoseStamped Door;
-  // Door.header.frame_id = "map";
-  // Door.pose.orientation.w = 1.0;
-  // Door.pose.position.x = 7.68;
-  // Door.pose.position.y = -1.25;
-  // blackboard->set("Door", Door);
+  geometry_msgs::msg::PoseStamped Door;
+  Door.header.frame_id = "map";
+  Door.pose.orientation.w = 1.0;
+  Door.pose.position.x = 7.68;
+  Door.pose.position.y = -1.25;
+  blackboard->set("Door", Door);
 
-  // geometry_msgs::msg::PoseStamped Party;
-  // Party.header.frame_id = "map";
-  // Party.pose.orientation.w = 1.0;
-  // Party.pose.position.x = 2.53;
-  // Party.pose.position.y = 5.62;
-  // blackboard->set("Party", Party);
+  geometry_msgs::msg::PoseStamped Party;
+  Party.header.frame_id = "map";
+  Party.pose.orientation.w = 1.0;
+  Party.pose.position.x = 2.53;
+  Party.pose.position.y = 5.62;
+  blackboard->set("Party", Party);
 
-  // geometry_msgs::msg::PoseStamped Barman;
-  // Barman.header.frame_id = "map";
-  // Barman.pose.orientation.w = 1.0;
-  // Barman.pose.position.x = 1.17;
-  // Barman.pose.position.y = 6.5;
-  // blackboard->set("Barman", Barman);
+  geometry_msgs::msg::PoseStamped chair1;
+  chair1.header.frame_id = "map";
+  chair1.pose.orientation.w = 1.0;
+  chair1.pose.position.x = 2.53;
+  chair1.pose.position.y = 5.62;
+  blackboard->set("chair1", chair1);
+
+  geometry_msgs::msg::PoseStamped chair2;
+  chair2.header.frame_id = "map";
+  chair2.pose.orientation.w = 1.0;
+  chair2.pose.position.x = 2.53;
+  chair2.pose.position.y = 5.62;
+  blackboard->set("chair2", chair2);
+
+  geometry_msgs::msg::PoseStamped chair3;
+  chair3.header.frame_id = "map";
+  chair3.pose.orientation.w = 1.0;
+  chair3.pose.position.x = 2.53;
+  chair3.pose.position.y = 5.62;
+  blackboard->set("chair3", chair3);
+
+  geometry_msgs::msg::PoseStamped chair4;
+  chair4.header.frame_id = "map";
+  chair4.pose.orientation.w = 1.0;
+  chair4.pose.position.x = 2.53;
+  chair4.pose.position.y = 5.62;
+  blackboard->set("chair4", chair4);
+
+  geometry_msgs::msg::PoseStamped Barman;
+  Barman.header.frame_id = "map";
+  Barman.pose.orientation.w = 1.0;
+  Barman.pose.position.x = 1.17;
+  Barman.pose.position.y = 6.5;
+  blackboard->set("Barman", Barman);
 
   //blackboard->set("Point", Person);
 
