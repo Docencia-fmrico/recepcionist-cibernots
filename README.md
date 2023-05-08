@@ -10,6 +10,7 @@
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
+- [Getting Started](#getting-started)
 - [Dependencies](#Dependencies)
 - [How to execute the programs](#How-to-execute-the-programs)
 - [Nav explanation](#Nav-explanation)
@@ -19,6 +20,10 @@
 - [BT NODES](#BT-NODES)
 - [license](#license)
 - [Video_demostration](#Video_demostration)
+
+## Getting Started
+
+To get started, you will need to have a Kobuki robot, as well as the necessary software and dependencies installed on your machine. The interfaces used for this project include Groot for building and testing the robot's behavior tree, Navigation for autonomous movement and localization, Dialogflow for natural language processing and conversation management, and Darknetros for object recognition and detection.
 
 ## Dependencies
 
@@ -135,6 +140,17 @@ Remember that the most basic operation is a tick (a function call) that propagat
 
 ## BT NODES
 
+Receptionist Test Workflow
+
+Mapping the environment: We started by mapping the entire scenario and saving the key locations as points.
+
+Behavior tree node for navigation: We created a behavior tree node that allows the Kobuki to navigate through the environment to the desired point using the previuslly obtained map.
+
+Using Darknetros for object recognition: We use Darknetros to find an empty chair for them to sit in.
+
+Conversation management with Dialogflow: Used for interaction with guests and barman. First used by asking guest's name and drink, after that we introduce the guest to the others, and finally to retrieve the guest's drink.
+
+Using Blackboard to save data between nodes: To save the guest's name and drink order between nodes, we used the Blackboard of the behavior tree.
 
 
 
