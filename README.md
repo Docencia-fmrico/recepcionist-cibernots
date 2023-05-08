@@ -12,6 +12,7 @@
 - [Table of Contents](#table-of-contents)
 - [Getting Started](#getting-started)
 - [Dependencies](#Dependencies)
+- [How to map enviroment](#How-to-map-enviroment)
 - [How to execute the programs](#How-to-execute-the-programs)
 - [Nav explanation](#Nav-explanation)
 - [Tf explanation](#Tf-explanation)
@@ -103,6 +104,15 @@ Google Cloud and DialogFlow Setup
 - Edit dialogflow_ros/config/param.yaml and write down your project id. You can find it in the DialogFlow Console, clicking in the gear icon.
 - Add export GOOGLE_APPLICATION_CREDENTIALS='/home/<user>/df_api.json' to your .bashrc and change user.
     
+## How to map enviroment   
+```bash
+ros2 launch slam_toolbox online_sync_launch.py slam_params_f=<dir/online_async.yaml>
+ros2 launch nav2_map_server map_saver_server.launch.py
+rviz2
+ros2 launch ir_robots kobuki.launch.py
+ros2 run kobuki_keyop kobuki_keyop_node
+ros2 run nav2_map_server map_saver_cli
+```
     
 ## How to execute the programs
 
