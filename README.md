@@ -1,6 +1,11 @@
-# Seek_and_capture_cibernots
 
-<h3 align="center">Seek and Capture </h3>
+# Recepcionist_cibernots 
+
+<div align="center">
+<img width=100px src="https://user-images.githubusercontent.com/90764701/236884630-7fa152a6-efe1-47bd-a0b5-3894860f5c90.png" alt="explode"></a>
+</div>
+
+<h3 align="center">Recepcionist </h3>
 
 <div align="center">
 <img width=100px src="https://img.shields.io/badge/status-finished-brightgreen" alt="explode"></a>
@@ -10,13 +15,23 @@
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
+
+- [Getting Started](#getting-started)
 - [Dependencies](#Dependencies)
+- [How to map enviroment](#How-to-map-enviroment)
 - [How to execute the programs](#How-to-execute-the-programs)
+- [Nav explanation](#Nav-explanation)
 - [Tf explanation](#Tf-explanation)
 - [Behavior tree](#Behavior-tree)
+- [DialogFlow explanation](#DialogFlow-explanation)
 - [BT NODES](#BT-NODES)
 - [license](#license)
 - [Video_demostration](#Video_demostration)
+
+
+## Getting Started
+
+To get started, you will need to have a Kobuki robot, as well as the necessary software and dependencies installed on your machine. The interfaces used for this project include Groot for building and testing the robot's behavior tree, Navigation for autonomous movement and localization, Dialogflow for natural language processing and conversation management, and Darknetros for object recognition and detection.
 
 ## Dependencies
 
@@ -27,7 +42,8 @@ To use this program, you will need to have the following packages installed:
 - Groot: This is a graphical user interface (GUI) program that will allow you to manually control the robot. It is optional, but highly recommended.
 - BehaviorTree.CPP: for the robot's actuaction we will use behaviour trees, by accessing the following link, you can clone the repository and follow the compilation steps: https://github.com/facontidavide/BehaviorTree.CPP
 - ZMQLIB: as the behavior tree is external to ros, it needs an IOT communication middleware for the communication between nodes, this is why we use ZMQ.
-- DialogFlow: 
+- DialogFlow: GB-dialog contains the library DialogInterface from which we will inherit to develop our dialogue actions. Each action would be specific to an intent (Dialogflow concepts).
+- Nav:
 
 You can install Darknet ROS by following the instructions in its GitHub repository:
 
@@ -62,6 +78,49 @@ sudo apt-get install libzmq3-dev libboost-dev
 
 ```
 
+You can install install DialogFlow following the nexts steps:
+``` bash
+#If you don't have vcs tool, install it with:
+sudo apt-get install python3-vcstool wget libgst-dev libgst7 libgstreamer1.0-* libgstreamer-plugins-base1.0-dev
+
+cd <workspace>/src
+mkdir dialog
+cd dialog
+wget https://raw.githubusercontent.com/IntelligentRoboticsLabs/gb_dialog/ros2/gb_dialog.repos
+vcs import < gb_dialog.repos
+
+cd <workspace>
+rosdep install --from-paths src --ignore-src -r -y
+
+#install requirements:
+sudo apt-get install portaudio19-dev
+cd <workspace>/src/dialog/dialogflow_ros2
+pip3 install -r requirements.txt
+```
+
+Finally, follow this steps:
+Google Cloud and DialogFlow Setup
+- Go to Google Cloud Console.
+- Create a new project.
+- Go to the Kick Setup.
+- Enable API.
+- Create Service Account.
+- Click on your service account. Create key & download the JSON File. Rename and move it t your HOME as ~/df_api.json.
+- Go to DialogFlow Console.
+- Create new Agent & select the project.
+- Edit dialogflow_ros/config/param.yaml and write down your project id. You can find it in the DialogFlow Console, clicking in the gear icon.
+- Add export GOOGLE_APPLICATION_CREDENTIALS='/home/<user>/df_api.json' to your .bashrc and change user.
+    
+## How to map enviroment   
+```bash
+ros2 launch slam_toolbox online_sync_launch.py slam_params_f=<dir/online_async.yaml>
+ros2 launch nav2_map_server map_saver_server.launch.py
+rviz2
+ros2 launch ir_robots kobuki.launch.py
+ros2 run kobuki_keyop kobuki_keyop_node
+ros2 run nav2_map_server map_saver_cli
+```
+    
 ## How to execute the programs
 
 First connect the base and the camera then :
@@ -98,9 +157,18 @@ Remember that the most basic operation is a tick (a function call) that propagat
 
 ## BT NODES
 
+Receptionist Test Workflow
 
-    
-```
+Mapping the environment: We started by mapping the entire scenario and saving the key locations as points.
+
+Behavior tree node for navigation: We created a behavior tree node that allows the Kobuki to navigate through the environment to the desired point using the previuslly obtained map.
+
+Using Darknetros for object recognition: We use Darknetros to find an empty chair for them to sit in.
+
+Conversation management with Dialogflow: Used for interaction with guests and barman. First used by asking guest's name and drink, after that we introduce the guest to the others, and finally to retrieve the guest's drink.
+
+Using Blackboard to save data between nodes: To save the guest's name and drink order between nodes, we used the Blackboard of the behavior tree.
+
 
 ## Implements
 
