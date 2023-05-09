@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Repeat num_cycles="2">
+            <Sequence>
+                <Action ID="Ask" cases="{ask name}"/>
+                <Action ID="Ask" cases="{say name}"/>
+                <Action ID="Ask" cases="{ask drink}"/>
+                <Action ID="Ask" cases="{say drink}"/>
+            </Sequence>
+        </Repeat>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="Ask">
+            <inout_port name="cases"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

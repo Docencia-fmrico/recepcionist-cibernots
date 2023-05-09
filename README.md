@@ -1,3 +1,4 @@
+
 # Recepcionist_cibernots 
 
 <div align="center">
@@ -14,6 +15,7 @@
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
+
 - [Getting Started](#getting-started)
 - [Dependencies](#Dependencies)
 - [How to map enviroment](#How-to-map-enviroment)
@@ -25,6 +27,7 @@
 - [BT NODES](#BT-NODES)
 - [license](#license)
 - [Video_demostration](#Video_demostration)
+
 
 ## Getting Started
 
@@ -165,7 +168,6 @@ Using Darknetros for object recognition: We use Darknetros to find an empty chai
 Conversation management with Dialogflow: Used for interaction with guests and barman. First used by asking guest's name and drink, after that we introduce the guest to the others, and finally to retrieve the guest's drink.
 
 Using Blackboard to save data between nodes: To save the guest's name and drink order between nodes, we used the Blackboard of the behavior tree.
-
 
 
 ## Implements

@@ -57,6 +57,12 @@ int main(int argc, char * argv[])
   BT::BehaviorTreeFactory factory;
   BT::SharedLibrary loader;
   
+
+  factory.registerFromPlugin(loader.getOSName("bt_askname_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_introduceguest_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_askdrink_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_orderdrink_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_servedrink_node"));
   factory.registerFromPlugin(loader.getOSName("bt_goTo_node"));
   // factory.registerFromPlugin(loader.getOSName("bt_waitPerson_node"));
   // factory.registerFromPlugin(loader.getOSName("bt_ask_node"));
@@ -67,8 +73,10 @@ int main(int argc, char * argv[])
   // factory.registerFromPlugin(loader.getOSName("bt_sendChair_node"));
 
   std::string pkgpath = ament_index_cpp::get_package_share_directory("recepcionist_cibernots");
-  std::string xml_file = pkgpath + "/behavior_tree_xml/Goto.xml";
+
+  // std::string xml_file = pkgpath + "/behavior_tree_xml/Goto.xml";
   // std::string xml_file = pkgpath + "/behavior_tree_xml/bt_recepcionist.xml";
+  std::string xml_file = pkgpath + "/behavior_tree_xml/Dialogo.xml";
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set("node", node);
