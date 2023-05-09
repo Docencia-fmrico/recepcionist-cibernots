@@ -1,3 +1,4 @@
+
 # Recepcionist_cibernots 
 
 <div align="center">
@@ -14,6 +15,7 @@
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
+
 - [Getting Started](#getting-started)
 - [Dependencies](#Dependencies)
 - [How to map enviroment](#How-to-map-enviroment)
@@ -25,6 +27,7 @@
 - [BT NODES](#BT-NODES)
 - [license](#license)
 - [Video_demostration](#Video_demostration)
+
 
 ## Getting Started
 
@@ -151,6 +154,9 @@ Snippet (launch program):
 ## Behavior tree
 Remember that the most basic operation is a tick (a function call) that propagates to the children and returns 3 possibilities: SUCCES, FAILURE AND RUNNING.
 
+## DialogFlow Explanation
+Our first idea was to create a behaviour tree node that would be able to execute all the speaking and listening behaviour of the scenario by means of callbacks. We had a lot of problems and decided to create a node for each interaction that our robot should have. We tried to make the behaviour of each node as natural as possible, so that the robot can behave very naturally, initiating conversations and storing the necessary data.
+The logic we use is based on subscribing and spinning the dialog node, which allows us to use its speak and listen methods. To interact with the person we classify the answers by means of indents created in dialogflow and store the relevant data in the blackboard to communicate between nodes.
 
 ## BT NODES
 
@@ -165,7 +171,6 @@ Using Darknetros for object recognition: We use Darknetros to find an empty chai
 Conversation management with Dialogflow: Used for interaction with guests and barman. First used by asking guest's name and drink, after that we introduce the guest to the others, and finally to retrieve the guest's drink.
 
 Using Blackboard to save data between nodes: To save the guest's name and drink order between nodes, we used the Blackboard of the behavior tree.
-
 
 
 ## Implements

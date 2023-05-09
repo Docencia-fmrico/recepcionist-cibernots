@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence>
+            <Action ID="AskName" name_="{names}"/>
+            <Delay delay_msec="5000">
+                <Action ID="IntroduceGuest" name_="{names}"/>
+            </Delay>
+            <Delay delay_msec="5000">
+                <Action ID="AskDrink"/>
+            </Delay>
+            <Delay delay_msec="5000">
+                <Action ID="OrderDrink"/>
+            </Delay>
+            <Delay delay_msec="5000">
+                <Action ID="ServeDrink"/>
+            </Delay>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="AskDrink"/>
+        <Action ID="AskName">
+            <output_port name="name_"/>
+        </Action>
+        <Action ID="IntroduceGuest">
+            <input_port name="name_"/>
+        </Action>
+        <Action ID="OrderDrink"/>
+        <Action ID="ServeDrink"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

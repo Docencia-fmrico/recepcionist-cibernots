@@ -28,6 +28,10 @@
   <depend>kobuki_ros_interfaces</depend>
   <depend>std_msgs</depend>
   <depend>nav2_msgs</depend>
+  <depend>dialogflow_ros2_interfaces</depend>
+  <depend>std_srvs</depend>
+  <depend>sound_play</depend>
+
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
