@@ -81,7 +81,6 @@ add_library(${PROJECT_NAME} SHARED
 )
 ament_target_dependencies(${PROJECT_NAME} ${dependencies})
 
-add_library(bt_ask_node SHARED src/BTS/Ask.cpp)
 add_library(bt_goTo_node SHARED src/BTS/GoTo.cpp)
 add_library(bt_ifChair_node SHARED src/BTS/IfChair.cpp)
 add_library(bt_indicateChair_node SHARED src/BTS/IndicateChair.cpp)
@@ -89,9 +88,13 @@ add_library(bt_introduce_node SHARED src/BTS/Introduce.cpp)
 add_library(bt_searchChair_node SHARED src/BTS/SearchChair.cpp)
 add_library(bt_waitPerson_node SHARED src/BTS/WaitPerson.cpp)
 add_library(bt_sendChair_node SHARED src/BTS/SendChair.cpp)
+add_library(bt_askname_node SHARED src/BTS/AskName.cpp)
+add_library(bt_introduceguest_node SHARED src/BTS/IntroduceGuest.cpp)
+add_library(bt_askdrink_node SHARED src/BTS/AskDrink.cpp)
+add_library(bt_orderdrink_node SHARED src/BTS/OrderDrink.cpp)
+add_library(bt_servedrink_node SHARED src/BTS/ServeDrink.cpp)
 
 list(APPEND plugin_libs
-  bt_ask_node
   bt_goTo_node
   bt_ifChair_node
   bt_indicateChair_node
@@ -99,6 +102,11 @@ list(APPEND plugin_libs
   bt_searchChair_node
   bt_waitPerson_node
   bt_sendChair_node
+  bt_askname_node
+  bt_introduceguest_node
+  bt_askdrink_node
+  bt_orderdrink_node
+  bt_servedrink_node
 )
 
 foreach(bt_plugin ${plugin_libs})

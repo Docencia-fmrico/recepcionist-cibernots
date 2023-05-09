@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BTS__ASK_HPP_
-#define BTS__ASK_HPP_
+#ifndef BTS__ASKDRINK_HPP_
+#define BTS__ASKDRINK_HPP_
 
 #include <string>
 
@@ -27,25 +27,23 @@
 
 namespace recepcionist_cibernots
 {
-//using namespace std::std_msgs;
-class Ask : public BT::ActionNodeBase
+using namespace std::chrono_literals;
+class AskDrink : public BT::ActionNodeBase
 {
 public:
-  explicit Ask(
-    const std::string & xml_tag_name,
+  explicit AskDrink(
+    const std::string & xml_tag_Drink,
     const BT::NodeConfiguration & conf);
 
   void noIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
-  void nameCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
-  void drinkCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
-  void bartenderCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
+  void DrinkCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
 
   void halt() {}
   BT::NodeStatus tick();
 
   static BT::PortsList providedPorts()
   {
-    return {BT::InputPort<std_msgs::msg::String>("cases")};
+    return {};
   }
 
 
@@ -54,21 +52,14 @@ private:
   // dialogflow_ros2_interfaces::msg::DialogflowResult dialog_;
   gb_dialog::DialogInterface dialog_;
 
-  // Variable para guardar el caso de uso
-  std::string cases_;
-
   // Variable para guardar el nombre de tipo dialogflow_ros2_interfaces::msg::DialogflowResult
-  std::string name_;
-
-  // Variable para guardar la bebida de tipo dialogflow_ros2_interfaces::msg::DialogflowResult
-  std::string drink_;
+  std::string Drink_;
 
   bool listening_;
-  //std::string request_;
+  rclcpp::Time start_time_;
 
-  
 };
 
-}  // namespace recepcionist_cibernots
+}  // Drinkspace recepcionist_cibernots
 
 #endif  // BTS__ASK_HPP_
