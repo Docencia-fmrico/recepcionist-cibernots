@@ -46,7 +46,6 @@ BT::NodeStatus
 WaitPerson::tick()
 {
   // If exists the tf, pass to the next and if not, search the person
-
   geometry_msgs::msg::TransformStamped odom2person_msg;
   tf2::Stamped<tf2::Transform> odom2person;
 
@@ -59,14 +58,22 @@ WaitPerson::tick()
     RCLCPP_INFO(node_->get_logger(), "TRANSFORMADA ENCONTRADA:%s", odom2person_msg.child_frame_id.c_str());
   } catch (tf2::TransformException & ex) {
     RCLCPP_WARN(node_->get_logger(), "person transform not found: %s", ex.what());
-    return BT::NodeStatus::FAILURE;
+    return BT::NodeStatus::RUNNING;
   }
   if ((node_->now() - rclcpp::Time(odom2person_msg.header.stamp)) > TF_PERSON_TIMEOUT){
     RCLCPP_WARN(node_->get_logger(), "person transform not found");
-    return BT::NodeStatus::FAILURE;
+    return BT::NodeStatus::RUNNING;
   }
 
-  return BT::NodeStatus::SUCCESS;
+  // Calculate distance using pythagoras theorem
+  double distance = sqrt(odom2person.getOrigin().x()*odom2person.getOrigin().x() + odom2person.getOrigin().y()*odom2person.getOrigin().y());
+
+  // If the distance is less than 1.5, the person is there
+  if (std::abs(distance) <= 1.5) {
+    return BT::NodeStatus::SUCCESS;
+  }
+
+  return BT::NodeStatus::RUNNING;
 }
 
 }  // namespace recepcionist_cibernots
