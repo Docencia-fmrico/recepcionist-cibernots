@@ -72,7 +72,7 @@ AskDrink::tick()
 
   rclcpp::spin_some(dialog_.get_node_base_interface());
 
-  if (node_->now()-start_time_ < 1.5s) {
+  if (node_->now()-start_time_ < 3.5s) {
     return BT::NodeStatus::RUNNING;
   }
 
