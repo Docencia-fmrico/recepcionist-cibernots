@@ -40,7 +40,7 @@ OrderDrink::OrderDrink(
   listening_ = false;
   config().blackboard->get("node", node_);
   dialog_.registerCallback(std::bind(&OrderDrink::noIntentCB, this, ph::_1));
-  dialog_.registerCallback(std::bind(&OrderDrink::DrinkCB, this, ph::_1), "drinkCB");
+  dialog_.registerCallback(std::bind(&OrderDrink::BarmanCB, this, ph::_1), "barmanCB");
 }
 
 
@@ -50,7 +50,7 @@ void OrderDrink::noIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult re
   RCLCPP_INFO(node_->get_logger(), "[OrderDrink] NOINTENBT");
 }
 
-void OrderDrink::DrinkCB(dialogflow_ros2_interfaces::msg::DialogflowResult result)
+void OrderDrink::BarmanCB(dialogflow_ros2_interfaces::msg::DialogflowResult result)
 {
   drink_brmn_ = result.parameters[1].value[0].c_str();
   RCLCPP_INFO(node_->get_logger(), "[OrderDrink] DrinkCB: intent [%s]", drink_.c_str());
@@ -71,6 +71,10 @@ OrderDrink::tick()
   }
 
   rclcpp::spin_some(dialog_.get_node_base_interface());
+  
+  if (node_->now()-start_time_ < 3.5s) {
+    return BT::NodeStatus::RUNNING;
+  }
 
   if (!listening_)
   {
