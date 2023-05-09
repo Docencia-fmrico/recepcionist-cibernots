@@ -23,6 +23,8 @@
 
 #include "ament_index_cpp/get_package_share_directory.hpp"
 
+#include <tf2/LinearMath/Quaternion.h>
+
 #include "rclcpp/rclcpp.hpp"
 
 
@@ -36,43 +38,107 @@ int main(int argc, char * argv[])
   BT::SharedLibrary loader;
 
   factory.registerFromPlugin(loader.getOSName("bt_goTo_node"));
-  factory.registerFromPlugin(loader.getOSName("bt_waitPerson_node"));
-  factory.registerFromPlugin(loader.getOSName("bt_ask_node"));
-  factory.registerFromPlugin(loader.getOSName("bt_introduce_node"));
-  factory.registerFromPlugin(loader.getOSName("bt_ifChair_node"));
-  factory.registerFromPlugin(loader.getOSName("bt_searchChair_node"));
-  factory.registerFromPlugin(loader.getOSName("bt_indicateChair_node"));
-  factory.registerFromPlugin(loader.getOSName("bt_sendChair_node"));
+  // factory.registerFromPlugin(loader.getOSName("bt_waitPerson_node"));
+  // factory.registerFromPlugin(loader.getOSName("bt_ask_node"));
+  // factory.registerFromPlugin(loader.getOSName("bt_introduce_node"));
+  // factory.registerFromPlugin(loader.getOSName("bt_ifChair_node"));
+  // factory.registerFromPlugin(loader.getOSName("bt_searchChair_node"));
+  // factory.registerFromPlugin(loader.getOSName("bt_indicateChair_node"));
+  // factory.registerFromPlugin(loader.getOSName("bt_sendChair_node"));
 
   std::string pkgpath = ament_index_cpp::get_package_share_directory("recepcionist_cibernots");
-  // std::string xml_file = pkgpath + "/behavior_tree_xml/Goto.xml";
-  std::string xml_file = pkgpath + "/behavior_tree_xml/bt_recepcionist.xml";
+  std::string xml_file = pkgpath + "/behavior_tree_xml/Goto.xml";
+  // std::string xml_file = pkgpath + "/behavior_tree_xml/bt_recepcionist.xml";
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set("node", node);
 
-  geometry_msgs::msg::PoseStamped Door;
-  Door.header.frame_id = "map";
-  Door.pose.orientation.w = 1.0;
-  Door.pose.position.x = 7.68;
-  Door.pose.position.y = -1.25;
-  blackboard->set("Door", Door);
+  geometry_msgs::msg::PoseStamped wp;
+  tf2::Quaternion myQuaternion;
+  wp.header.frame_id = "map";
+  wp.pose.orientation.w = 1.0;
 
-  geometry_msgs::msg::PoseStamped Party;
-  Party.header.frame_id = "map";
-  Party.pose.orientation.w = 1.0;
-  Party.pose.position.x = 2.53;
-  Party.pose.position.y = 5.62;
-  blackboard->set("Party", Party);
+  // inicio
+  wp.pose.position.x = 0.0;
+  wp.pose.position.y = 0.0;
+  
 
-  geometry_msgs::msg::PoseStamped Barman;
-  Barman.header.frame_id = "map";
-  Barman.pose.orientation.w = 1.0;
-  Barman.pose.position.x = 1.17;
-  Barman.pose.position.y = 6.5;
-  blackboard->set("Barman", Barman);
+  // puerta
+  wp.pose.position.x = 6.4;
+  wp.pose.position.y = -0.95;
+  myQuaternion.setRPY(0.0,0.0,(-3.50/2));
+  myQuaternion=myQuaternion.normalize();
+  wp.pose.orientation.x = myQuaternion[0];
+  wp.pose.orientation.y = myQuaternion[1];
+  wp.pose.orientation.z = myQuaternion[2];
+  wp.pose.orientation.w = myQuaternion[3];
+  blackboard->set("Door",wp );
+  
+  // Party
+  wp.pose.position.x = 0.32;
+  wp.pose.position.y = 3.43;
+  myQuaternion.setRPY(0.0,0.0,(-3.1/4));
+  myQuaternion=myQuaternion.normalize();
+  wp.pose.orientation.x = myQuaternion[0];
+  wp.pose.orientation.y = myQuaternion[1];
+  wp.pose.orientation.z = myQuaternion[2];
+  wp.pose.orientation.w = myQuaternion[3];
+  blackboard->set("Party",wp );
 
-  //blackboard->set("Point", Person);
+  // chair1
+  wp.pose.position.x = 0.32;
+  wp.pose.position.y = 3.43;
+  myQuaternion.setRPY(0.0,0.0,(-3.1/4));
+  myQuaternion=myQuaternion.normalize();
+  wp.pose.orientation.x = myQuaternion[0];
+  wp.pose.orientation.y = myQuaternion[1];
+  wp.pose.orientation.z = myQuaternion[2];
+  wp.pose.orientation.w = myQuaternion[3];
+  blackboard->set("chair1",wp );
+
+  // chair2
+  wp.pose.position.x = 0.32;
+  wp.pose.position.y = 3.43;
+  myQuaternion.setRPY(0.0,0.0,(-3.64/2));
+  myQuaternion=myQuaternion.normalize();
+  wp.pose.orientation.x = myQuaternion[0];
+  wp.pose.orientation.y = myQuaternion[1];
+  wp.pose.orientation.z = myQuaternion[2];
+  wp.pose.orientation.w = myQuaternion[3];
+  blackboard->set("chair2",wp );
+  
+  // chair3
+  wp.pose.position.x = -0.217;
+  wp.pose.position.y = 2.83;
+  myQuaternion.setRPY(0.0,0.0,(-3.64/2));
+  myQuaternion=myQuaternion.normalize();
+  wp.pose.orientation.x = myQuaternion[0];
+  wp.pose.orientation.y = myQuaternion[1];
+  wp.pose.orientation.z = myQuaternion[2];
+  wp.pose.orientation.w = myQuaternion[3];
+  blackboard->set("chair3",wp );
+  
+  // chair4
+  wp.pose.position.x = -0.217;
+  wp.pose.position.y = 2.83;
+  myQuaternion.setRPY(0.0,0.0,(-3.64/2));
+  myQuaternion=myQuaternion.normalize();
+  wp.pose.orientation.x = myQuaternion[0];
+  wp.pose.orientation.y = myQuaternion[1];
+  wp.pose.orientation.z = myQuaternion[2];
+  wp.pose.orientation.w = myQuaternion[3];
+  blackboard->set("chair4",wp );
+  
+  // Barman
+  wp.pose.position.x = 0.248;
+  wp.pose.position.y = 6.64;
+  myQuaternion.setRPY(0.0,0.0,(3.1/2));
+  myQuaternion=myQuaternion.normalize();
+  wp.pose.orientation.x = myQuaternion[0];
+  wp.pose.orientation.y = myQuaternion[1];
+  wp.pose.orientation.z = myQuaternion[2];
+  wp.pose.orientation.w = myQuaternion[3];
+  blackboard->set("Barman", wp);
 
   BT::Tree tree = factory.createTreeFromFile(xml_file, blackboard);
 

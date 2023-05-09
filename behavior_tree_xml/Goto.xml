@@ -6,6 +6,10 @@
             <Sequence>
                 <Action ID="GoTo" Point="{Door}"/>
                 <Action ID="GoTo" Point="{Party}"/>
+                <Action ID="GoTo" Point="{chair1}"/>
+                <Action ID="GoTo" Point="{chair2}"/>
+                <Action ID="GoTo" Point="{chair3}"/>
+                <Action ID="GoTo" Point="{chair4}"/>
                 <Action ID="GoTo" Point="{Barman}"/>
             </Sequence>
         </Repeat>
