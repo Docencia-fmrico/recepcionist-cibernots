@@ -43,7 +43,7 @@ public:
 
   static BT::PortsList providedPorts()
   {
-    return {BT::OutputPort<std_msgs::msg::String>("name_")};
+    return {};
   }
 
 

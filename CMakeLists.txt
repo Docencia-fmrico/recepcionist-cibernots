@@ -29,9 +29,9 @@ find_package(control_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(nav2_msgs REQUIRED)
 find_package(gb_dialog REQUIRED)
-#find_package(dialogflow_ros2_interfaces REQUIRED)
-#find_package(std_srvs REQUIRED)
-#find_package(sound_play REQUIRED)
+find_package(dialogflow_ros2_interfaces REQUIRED)
+find_package(std_srvs REQUIRED)
+find_package(sound_play REQUIRED)
 
 find_package(OpenCV REQUIRED)
 
@@ -68,9 +68,9 @@ set(dependencies
   std_msgs
   nav2_msgs
   gb_dialog
-  #dialogflow_ros2_interfaces
-  #std_srvs
-  #sound_play
+  dialogflow_ros2_interfaces
+  std_srvs
+  sound_play
 )
 
 add_library(${PROJECT_NAME} SHARED
