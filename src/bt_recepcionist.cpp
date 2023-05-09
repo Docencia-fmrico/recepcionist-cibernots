@@ -25,7 +25,27 @@
 
 #include <tf2/LinearMath/Quaternion.h>
 
+
 #include "rclcpp/rclcpp.hpp"
+
+void pub_tf_chairs(std::string names[], int n, const rclcpp::Node::SharedPtr node, std::array<tf2::Vector3, 4> positions) {
+
+  std::shared_ptr<tf2_ros::StaticTransformBroadcaster> tf_broadcaster_ = std::make_shared<tf2_ros::StaticTransformBroadcaster>(node);
+
+  for (int i = 0; i < n; i++) {
+    tf2::Transform map2chair;
+    map2chair.setOrigin(positions[i]);
+    map2chair.setRotation(tf2::Quaternion(0.0, 0.0, 0.0, 1.0));
+
+    // Publish the transform
+    geometry_msgs::msg::TransformStamped map2chair_msg;
+    map2chair_msg.transform = tf2::toMsg(map2chair);  
+    map2chair_msg.header.stamp = node->now();
+    map2chair_msg.header.frame_id = "map";
+    map2chair_msg.child_frame_id = names[i];
+    tf_broadcaster_->sendTransform(map2chair_msg);  
+  }
+}
 
 
 int main(int argc, char * argv[])
@@ -36,7 +56,7 @@ int main(int argc, char * argv[])
 
   BT::BehaviorTreeFactory factory;
   BT::SharedLibrary loader;
-
+  
   factory.registerFromPlugin(loader.getOSName("bt_goTo_node"));
   // factory.registerFromPlugin(loader.getOSName("bt_waitPerson_node"));
   // factory.registerFromPlugin(loader.getOSName("bt_ask_node"));
@@ -146,9 +166,22 @@ int main(int argc, char * argv[])
 
   rclcpp::Rate rate(10);
 
+  // Crea un array de 4 vectores que contienen tres floats
+  std::array<tf2::Vector3, 4> position_chairs;
+
+  // Inicializa cada objeto con tres floats
+  position_chairs[0] = tf2::Vector3(1.0, 2.0, 0.0);
+  position_chairs[1] = tf2::Vector3(4.0, 5.0, 0.0);
+  position_chairs[2] = tf2::Vector3(7.0, 8.0, 0.0);
+  position_chairs[3] = tf2::Vector3(12.0, 8.0, 0.0);
+
+  std::string name_chairs[4] = {"Chair1","Chair2","Chair3","Chair4"};
+  pub_tf_chairs(name_chairs, 4, node, position_chairs);
+
   bool finish = false;
   while (!finish && rclcpp::ok()) {
-    finish = tree.rootNode()->executeTick() != BT::NodeStatus::RUNNING;
+
+    finish = tree.rootNode()->executeTick() == BT::NodeStatus::SUCCESS;
 
     rclcpp::spin_some(node);
     rate.sleep();

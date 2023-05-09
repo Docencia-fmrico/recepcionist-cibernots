@@ -1,4 +1,4 @@
-// Copyright 2023 cibernots
+// Copyright 2021 Intelligent Robotics Lab
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,12 +34,21 @@ SearchChair::SearchChair(
 : BT::ActionNodeBase(xml_tag_name, conf)
 {
   config().blackboard->get("node", node_);
+
+  // Because it does not detect the person, subscribe to the velocity and turn
+  vel_pub_ = node_->create_publisher<geometry_msgs::msg::Twist>("output_vel", 100);
+
 }
 
 BT::NodeStatus
 SearchChair::tick()
 {
-  return BT::NodeStatus::SUCCESS;
+  // Rotate to find some free chair
+  geometry_msgs::msg::Twist out_vel;
+  out_vel.angular.z = -0.35f;
+
+  vel_pub_->publish(out_vel);
+  return BT::NodeStatus::RUNNING;
 }
 
 }  // namespace recepcionist_cibernots

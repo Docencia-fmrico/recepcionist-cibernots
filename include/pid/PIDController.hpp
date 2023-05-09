@@ -12,42 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BTS__SEARCHCHAIR_HPP_
-#define BTS__SEARCHCHAIR_HPP_
 
-#include <string>
+#ifndef PID__PIDCONTROLLER_HPP_
+#define PID__PIDCONTROLLER_HPP_
 
-#include "behaviortree_cpp_v3/behavior_tree.h"
-#include "behaviortree_cpp_v3/bt_factory.h"
-
-#include "geometry_msgs/msg/twist.hpp"
-#include "rclcpp/rclcpp.hpp"
+#include <cmath>
 
 namespace recepcionist_cibernots
 {
 
-class SearchChair : public BT::ActionNodeBase
+class PIDController
 {
 public:
-  explicit SearchChair(
-    const std::string & xml_tag_name,
-    const BT::NodeConfiguration & conf);
+  PIDController(double min_ref, double max_ref, double min_output, double max_output);
 
-  void halt() {}
-  BT::NodeStatus tick();
-
-  static BT::PortsList providedPorts()
-  {
-    return BT::PortsList({});
-  }
+  void set_pid(double n_KP, double n_KI, double n_KD);
+  double get_output(double new_reference);
 
 private:
-  rclcpp::Node::SharedPtr node_;
-  // Velocities publisher
-  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub_;
-  
+  double KP_, KI_, KD_;
+
+  double min_ref_, max_ref_;
+  double min_output_, max_output_;
+  double prev_error_, int_error_;
 };
 
 }  // namespace recepcionist_cibernots
 
-#endif  // BT_NODES__SEARCHCHAIR_HPP_
+#endif  // PID__PIDCONTROLLER_HPP_

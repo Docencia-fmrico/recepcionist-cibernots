@@ -1,4 +1,4 @@
-// Copyright 2023 Intelligent Robotics Lab
+// Copyright 2021 Intelligent Robotics Lab
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BTS__SEARCHCHAIR_HPP_
-#define BTS__SEARCHCHAIR_HPP_
+#ifndef BT_NODES__REACHEDCHAIR_HPP_
+#define BT_NODES__REACHEDCHAIR_HPP_
+
+#include <tf2_ros/buffer.h>
+#include <tf2_ros/transform_listener.h>
 
 #include <string>
 
@@ -22,14 +25,15 @@
 
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
+#include "kobuki_ros_interfaces/msg/sound.hpp"
 
 namespace recepcionist_cibernots
 {
 
-class SearchChair : public BT::ActionNodeBase
+class ReachedChair : public BT::ActionNodeBase
 {
 public:
-  explicit SearchChair(
+  explicit ReachedChair(
     const std::string & xml_tag_name,
     const BT::NodeConfiguration & conf);
 
@@ -42,12 +46,19 @@ public:
   }
 
 private:
+
   rclcpp::Node::SharedPtr node_;
-  // Velocities publisher
+  // Velocity publisher
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub_;
   
+  // Sound publisher
+  rclcpp::Publisher<kobuki_ros_interfaces::msg::Sound>::SharedPtr sound_pub_;
+
+  // buffer and listener for tf
+  tf2::BufferCore tf_buffer_;
+  tf2_ros::TransformListener tf_listener_;
 };
 
 }  // namespace recepcionist_cibernots
 
-#endif  // BT_NODES__SEARCHCHAIR_HPP_
+#endif  // BT_NODES__REACHEDCHAIR_HPP_

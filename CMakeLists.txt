@@ -41,6 +41,7 @@ endif()
 
 include_directories(include)
 include_directories(include ${ZMQ_INCLUDE_DIRS})
+include_directories(${std_msgs_INCLUDE_DIRS})
 
 set(dependencies
   rclcpp
@@ -68,6 +69,7 @@ add_library(${PROJECT_NAME} SHARED
   src/perception_asr/DarknetObjDetectionNode.cpp
   src/perception_asr/ObjectDetectionTo3DfromDepthNode.cpp
   src/tf2_detector/ObjectDetectorImprovedNode.cpp
+  src/pid/PIDController.cpp
 )
 ament_target_dependencies(${PROJECT_NAME} ${dependencies})
 
@@ -111,6 +113,7 @@ target_link_libraries(objdetection_2d_to_3d_depth_tf ${PROJECT_NAME})
 add_executable(imageobject_tf src/detector_improved_main.cpp)
 ament_target_dependencies(imageobject_tf ${dependencies})
 target_link_libraries(imageobject_tf ${PROJECT_NAME})
+
 
 install(TARGETS
   ${PROJECT_NAME}

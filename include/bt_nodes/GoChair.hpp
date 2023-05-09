@@ -12,24 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BTS__SEARCHCHAIR_HPP_
-#define BTS__SEARCHCHAIR_HPP_
-
-#include <string>
+#ifndef BT_NODES__GOCHAIR_HPP_
+#define BT_NODES__GOCHAIR_HPP_
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 
+#include <string>
+
+#include <tf2_ros/buffer.h>
+#include <tf2_ros/transform_listener.h>
+
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
+#include "pid/PIDController.hpp"
+#include <memory>
+#include "control_msgs/msg/joint_trajectory_controller_state.hpp"
 
 namespace recepcionist_cibernots
 {
 
-class SearchChair : public BT::ActionNodeBase
+class GoChair: public BT::ActionNodeBase
 {
 public:
-  explicit SearchChair(
+  explicit GoChair(
     const std::string & xml_tag_name,
     const BT::NodeConfiguration & conf);
 
@@ -43,11 +49,17 @@ public:
 
 private:
   rclcpp::Node::SharedPtr node_;
-  // Velocities publisher
+  // Velocity publisher
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub_;
-  
+
+  // pid controllers
+  PIDController linear_pid_, angular_pid_;
+
+  // buffer and listener for tf
+  tf2::BufferCore tf_buffer_;
+  tf2_ros::TransformListener tf_listener_;
 };
 
 }  // namespace recepcionist_cibernots
 
-#endif  // BT_NODES__SEARCHCHAIR_HPP_
+#endif  // BT_NODES__GOCHAIR_HPP_
