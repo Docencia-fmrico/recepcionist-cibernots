@@ -87,6 +87,7 @@ AskName::tick()
   }
 
   if (name_ == "" && node_->now()-start_time_ > 10s) {
+    start_time_ = node_->now();
     listening_ = false;
   }
 

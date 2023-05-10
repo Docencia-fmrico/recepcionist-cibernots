@@ -69,7 +69,8 @@ WaitPerson::tick()
   double distance = sqrt(odom2person.getOrigin().x()*odom2person.getOrigin().x() + odom2person.getOrigin().y()*odom2person.getOrigin().y());
 
   // If the distance is less than 1.5, the person is there
-  if (std::abs(distance) <= 1.5) {
+  if (std::abs(distance) <= 1.0) {
+    RCLCPP_INFO(node_->get_logger(), "LA PERSONA LLEGO");
     return BT::NodeStatus::SUCCESS;
   }
 

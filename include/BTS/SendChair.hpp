@@ -53,7 +53,7 @@ private:
   tf2::BufferCore tf_buffer_;
   tf2_ros::TransformListener tf_listener_;
   int counter_;
-  std::string chairs_[4] = {"Chair1","Chair2","Chair3","Chair4"};
+  std::string chairs_[4] = {"chair1","chair2","chair3","chair4"};
   int angs_chairs_[4];
 };
 

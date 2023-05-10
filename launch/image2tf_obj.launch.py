@@ -35,7 +35,7 @@ def generate_launch_description():
                                   executable='recepcionist',
                                   output='screen',
                                   parameters=[{
-                                    'use_sim_time': False
+                                    'use_sim_time': True
                                   }],
                                   remappings=[
                                     ('output_vel', '/cmd_vel'),
@@ -47,7 +47,7 @@ def generate_launch_description():
                         executable='darknet_objdetection_tf',
                         output='screen',
                         parameters=[{
-                          'use_sim_time': False
+                          'use_sim_time': True
                         }],
                         remappings=[
                           ('input_bbxs_detection', '/darknet_ros/bounding_boxes'),
@@ -58,7 +58,7 @@ def generate_launch_description():
                                 executable='objdetection_2d_to_3d_depth_tf',
                                 output='screen',
                                 parameters=[{
-                                  'use_sim_time': False
+                                  'use_sim_time': True
                                 }],
                                 remappings=[
                                   ('input_depth', '/camera/depth/image_raw'),
@@ -71,7 +71,7 @@ def generate_launch_description():
                                       executable='imageobject_tf',
                                       output='screen',
                                       parameters=[{
-                                        'use_sim_time': False
+                                        'use_sim_time': True
                                       }],
                                       remappings=[
                                         ('input_detection_3d', '/objdetection3Darray')

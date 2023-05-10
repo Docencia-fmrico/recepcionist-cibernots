@@ -38,7 +38,7 @@ public:
   void halt() {}
   BT::NodeStatus tick();
   void noIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
-  void BarmanCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
+  void drinkCB(dialogflow_ros2_interfaces::msg::DialogflowResult result);
 
   static BT::PortsList providedPorts()
   {

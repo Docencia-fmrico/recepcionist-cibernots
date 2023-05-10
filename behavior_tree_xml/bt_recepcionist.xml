@@ -6,19 +6,19 @@
             <Sequence>
                 <Action ID="GoTo" Point="{Door}"/>
                 <Action ID="WaitPerson"/>
-                <Action ID="Ask" Request="{name}"/>
+                <Action ID="AskName"/>
                 <Action ID="GoTo" Point="{Party}"/>
-                <Action ID="Introduce"/>
+                <Action ID="IntroduceGuest"/>
                 <ReactiveFallback>
                     <Condition ID="IfChair"/>
                     <Action ID="SearchChair"/>
                 </ReactiveFallback>
                 <Action ID="SendChair"/>
-                <Action ID="Ask" Request="{drink}"/>
-                <Action ID="IndicateChair"/>
+                <Action ID="AskDrink"/>
                 <Action ID="GoTo" Point="{Barman}"/>
-                <Action ID="Ask" Request="{drink}"/>
+                <Action ID="OrderDrink"/>
                 <Action ID="GoTo" Point="{Party}"/>
+                <Action ID="ServeDrink"/>
             </Sequence>
         </Repeat>
     </BehaviorTree>
@@ -27,14 +27,19 @@
         <Action ID="Ask">
             <input_port name="Request"/>
         </Action>
+        <Action ID="AskDrink"/>
+        <Action ID="AskName"/>
         <Action ID="GoTo">
             <input_port name="Point"/>
         </Action>
         <Condition ID="IfChair"/>
         <Action ID="IndicateChair"/>
         <Action ID="Introduce"/>
+        <Action ID="IntroduceGuest"/>
+        <Action ID="OrderDrink"/>
         <Action ID="SearchChair"/>
         <Action ID="SendChair"/>
+        <Action ID="ServeDrink"/>
         <Action ID="WaitPerson"/>
     </TreeNodesModel>
     <!-- ////////// -->

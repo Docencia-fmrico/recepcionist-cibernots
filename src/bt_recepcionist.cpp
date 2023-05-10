@@ -64,7 +64,7 @@ int main(int argc, char * argv[])
   factory.registerFromPlugin(loader.getOSName("bt_orderdrink_node"));
   factory.registerFromPlugin(loader.getOSName("bt_servedrink_node"));
   factory.registerFromPlugin(loader.getOSName("bt_goTo_node"));
-  // factory.registerFromPlugin(loader.getOSName("bt_waitPerson_node"));
+  factory.registerFromPlugin(loader.getOSName("bt_waitPerson_node"));
   // factory.registerFromPlugin(loader.getOSName("bt_ask_node"));
   // factory.registerFromPlugin(loader.getOSName("bt_introduce_node"));
   // factory.registerFromPlugin(loader.getOSName("bt_ifChair_node"));
@@ -76,7 +76,7 @@ int main(int argc, char * argv[])
 
   // std::string xml_file = pkgpath + "/behavior_tree_xml/Goto.xml";
   // std::string xml_file = pkgpath + "/behavior_tree_xml/bt_recepcionist.xml";
-  std::string xml_file = pkgpath + "/behavior_tree_xml/Dialogo.xml";
+  std::string xml_file = pkgpath + "/behavior_tree_xml/VisionPerson.xml";
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set("node", node);

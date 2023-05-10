@@ -3,17 +3,17 @@
     <!-- ////////// -->
     <BehaviorTree ID="BehaviorTree">
         <Sequence>
-            <Action ID="AskName" name_="{names}"/>
-            <Delay delay_msec="5000">
-                <Action ID="IntroduceGuest" name_="{names}"/>
+            <Action ID="AskName"/>
+            <Delay delay_msec="2000">
+                <Action ID="IntroduceGuest"/>
             </Delay>
-            <Delay delay_msec="5000">
+            <Delay delay_msec="2000">
                 <Action ID="AskDrink"/>
             </Delay>
-            <Delay delay_msec="5000">
+            <Delay delay_msec="2000">
                 <Action ID="OrderDrink"/>
             </Delay>
-            <Delay delay_msec="5000">
+            <Delay delay_msec="2000">
                 <Action ID="ServeDrink"/>
             </Delay>
         </Sequence>
@@ -21,12 +21,8 @@
     <!-- ////////// -->
     <TreeNodesModel>
         <Action ID="AskDrink"/>
-        <Action ID="AskName">
-            <output_port name="name_"/>
-        </Action>
-        <Action ID="IntroduceGuest">
-            <input_port name="name_"/>
-        </Action>
+        <Action ID="AskName"/>
+        <Action ID="IntroduceGuest"/>
         <Action ID="OrderDrink"/>
         <Action ID="ServeDrink"/>
     </TreeNodesModel>

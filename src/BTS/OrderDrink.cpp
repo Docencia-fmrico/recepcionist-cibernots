@@ -40,7 +40,7 @@ OrderDrink::OrderDrink(
   listening_ = false;
   config().blackboard->get("node", node_);
   dialog_.registerCallback(std::bind(&OrderDrink::noIntentCB, this, ph::_1));
-  dialog_.registerCallback(std::bind(&OrderDrink::BarmanCB, this, ph::_1), "barmanCB");
+  dialog_.registerCallback(std::bind(&OrderDrink::drinkCB, this, ph::_1), "drinkCB");
 }
 
 
@@ -50,17 +50,17 @@ void OrderDrink::noIntentCB(dialogflow_ros2_interfaces::msg::DialogflowResult re
   RCLCPP_INFO(node_->get_logger(), "[OrderDrink] NOINTENBT");
 }
 
-void OrderDrink::BarmanCB(dialogflow_ros2_interfaces::msg::DialogflowResult result)
+void OrderDrink::drinkCB(dialogflow_ros2_interfaces::msg::DialogflowResult result)
 {
   drink_brmn_ = result.parameters[1].value[0].c_str();
   RCLCPP_INFO(node_->get_logger(), "[OrderDrink] DrinkCB: intent [%s]", drink_.c_str());
-  config().blackboard->set("Drink_brmn", drink_brmn_);
+  config().blackboard->set("drink_brmn", drink_brmn_);
 }
 
 BT::NodeStatus
 OrderDrink::tick()
 {
-  config().blackboard->get("Drink_brmn", drink_brmn_);
+  config().blackboard->get("drink_brmn", drink_brmn_);
   config().blackboard->get("Drink", drink_);
 
   if (status() == BT::NodeStatus::IDLE)
@@ -79,21 +79,22 @@ OrderDrink::tick()
   if (!listening_)
   {
     listening_ = true;
-    RCLCPP_INFO(node_->get_logger(), "VOY A ESCUCHAR");
+    RCLCPP_INFO(node_->get_logger(), "[OrderDrink] VOY A ESCUCHAR");
     dialog_.listen();
   }
 
   if (drink_brmn_ == "" && node_->now()-start_time_ > 10s) {
+    start_time_ = node_->now();
     listening_ = false;
   }
 
-  if (drink_brmn_ == "")
+  if (drink_ == "")
   {
     return BT::NodeStatus::RUNNING;
   }
 
   listening_ = false;
-  RCLCPP_INFO(node_->get_logger(), "SUCCESS");
+  RCLCPP_INFO(node_->get_logger(), "[OrderDrink] SUCCESS");
   return BT::NodeStatus::SUCCESS;
 }
 

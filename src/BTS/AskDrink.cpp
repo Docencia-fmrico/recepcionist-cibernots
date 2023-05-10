@@ -84,18 +84,18 @@ AskDrink::tick()
   }
 
   if (Drink_ == "" && node_->now()-start_time_ > 10s) {
+    start_time_ = node_->now();
     listening_ = false;
   }
 
   if (Drink_ == "")
   {
-    // listening_ = false;
     return BT::NodeStatus::RUNNING;
   }
 
   listening_ = false;
   dialog_.speak("I'll bring you your drink");
-  RCLCPP_INFO(node_->get_logger(), "SUCCESS");
+  RCLCPP_INFO(node_->get_logger(), "[AskDrink] SUCCESS");
   return BT::NodeStatus::SUCCESS;
 }
 
