@@ -35,7 +35,7 @@ def generate_launch_description():
                                   executable='recepcionist',
                                   output='screen',
                                   parameters=[{
-                                    'use_sim_time': True
+                                    'use_sim_time': False
                                   }],
                                   remappings=[
                                     ('output_vel', '/cmd_vel'),
@@ -47,7 +47,7 @@ def generate_launch_description():
                         executable='darknet_objdetection_tf',
                         output='screen',
                         parameters=[{
-                          'use_sim_time': True
+                          'use_sim_time': False
                         }],
                         remappings=[
                           ('input_bbxs_detection', '/darknet_ros/bounding_boxes'),
@@ -58,7 +58,7 @@ def generate_launch_description():
                                 executable='objdetection_2d_to_3d_depth_tf',
                                 output='screen',
                                 parameters=[{
-                                  'use_sim_time': True
+                                  'use_sim_time': False
                                 }],
                                 remappings=[
                                   ('input_depth', '/camera/depth/image_raw'),
@@ -71,7 +71,7 @@ def generate_launch_description():
                                       executable='imageobject_tf',
                                       output='screen',
                                       parameters=[{
-                                        'use_sim_time': True
+                                        'use_sim_time': False
                                       }],
                                       remappings=[
                                         ('input_detection_3d', '/objdetection3Darray')
@@ -81,7 +81,7 @@ def generate_launch_description():
     ld.add_action(darknetobj_cmd)
     ld.add_action(objdetection2d_3d_cmd)
     ld.add_action(objdetection3d_objtf_cmd)
-    ld.add_action(recepcionist_cmd)
+    # ld.add_action(recepcionist_cmd)
     ld.add_action(image2tf_person_cmd)
 
     return ld

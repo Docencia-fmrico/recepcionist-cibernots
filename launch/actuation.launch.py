@@ -22,19 +22,19 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def generate_launch_description():
 
-    # image2tf_person_cmd = IncludeLaunchDescription(
-    #                       PythonLaunchDescriptionSource(os.path.join(
-    #                         get_package_share_directory('recepcionist_cibernots'),
-    #                         'launch',
-    #                         'image2tf_person.launch.py'))
-    #                       )
+    image2tf_person_cmd = IncludeLaunchDescription(
+                          PythonLaunchDescriptionSource(os.path.join(
+                            get_package_share_directory('recepcionist_cibernots'),
+                            'launch',
+                            'image2tf_person.launch.py'))
+                          )
     
-    # image2tf_obj_cmd = IncludeLaunchDescription(
-    #                       PythonLaunchDescriptionSource(os.path.join(
-    #                         get_package_share_directory('recepcionist_cibernots'),
-    #                         'launch',
-    #                         'image2tf_obj.launch.py'))
-    #                       )
+    image2tf_obj_cmd = IncludeLaunchDescription(
+                          PythonLaunchDescriptionSource(os.path.join(
+                            get_package_share_directory('recepcionist_cibernots'),
+                            'launch',
+                            'image2tf_obj.launch.py'))
+                          )
     
     recepcionist_cmd = Node(package='recepcionist_cibernots',
                                   executable='recepcionist',

@@ -13,7 +13,7 @@
                     <Condition ID="IfChair"/>
                     <Action ID="SearchChair"/>
                 </ReactiveFallback>
-                <Action ID="SendChair"/>
+                <!-- <Action ID="SendChair"/> -->
                 <Action ID="AskDrink"/>
                 <Action ID="GoTo" Point="{Barman}"/>
                 <Action ID="OrderDrink"/>
@@ -38,7 +38,7 @@
         <Action ID="IntroduceGuest"/>
         <Action ID="OrderDrink"/>
         <Action ID="SearchChair"/>
-        <Action ID="SendChair"/>
+        <!-- <Action ID="SendChair"/> -->
         <Action ID="ServeDrink"/>
         <Action ID="WaitPerson"/>
     </TreeNodesModel>
